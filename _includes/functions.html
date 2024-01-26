@@ -9,6 +9,8 @@
   {%- assign include_path = include_path | append: '.html' -%}
 {%- endif -%}
 
+{%- assign default = 'on' %}
+
 {%- if func == 'log' -%}
   {%- include functions/log.html level=include.level msg=include.msg -%}
 {%- else -%}
