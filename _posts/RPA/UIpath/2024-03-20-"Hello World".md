@@ -5,8 +5,8 @@ subtitle: 이 사람은 로봇입니다.
 author: Bonazoey
 categories: RPA
 banner:
-  image: "./assets/images/UIpath2.gif"
-  video: "./assets/images/UIpath2.gif"
+  image: "./assets/images/planet.gif"
+  video: "./assets/images/planet.gif"
   loop: true
   volume: 0
   start_at: 0
