@@ -66,7 +66,7 @@ Spring Framework를 사용할 때에 비하면 굉장히 가시적이고 직관�
 
 <br>
 
-![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/776de243-69d2-4e78-9abb-13862b7e8d41){: .align-center}
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/776de243-69d2-4e78-9abb-13862b7e8d41)
 
 `UIpath Studio`를 설치하고 실행시켰을 때 우측 상단에 프로젝트 만들 수 있는 화면이 뜬다.
 
@@ -183,7 +183,10 @@ Spring Framework를 사용할 때에 비하면 굉장히 가시적이고 직관�
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/dbf1479e-7f7e-47e8-8d36-57ac1569f9ca)
 
+<br>
+
 ## 실행결과
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/0826fc21-2280-4a12-9aaa-ff3945cabc30)
 
+Ta-Da!
