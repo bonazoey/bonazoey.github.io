@@ -18,7 +18,8 @@
     var sw = document.getElementById('theme-switch');
     var html = document.getElementsByTagName('html')[0];
     var nightModeOption = ('{{ night_mode }}' || 'auto').toLowerCase();
-    var storage = nightModeOption === 'manual'
+    /* 여기가 다크테마로 바꾸는 곳 */
+    var storage = nightModeOption === 'dark_default'
         ? localStorage
         : sessionStorage;
     var themeData = loadThemeData();
