@@ -181,11 +181,11 @@ Spring Framework를 사용할 때에 비하면 굉장히 가시적이고 직관�
 
 그 후 다시 Type info 액티비티로 "Hello World"를 작성해주면 끝!
 
-![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/dbf1479e-7f7e-47e8-8d36-57ac1569f9ca)
-
 <br>
 
 ## 실행결과
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/dbf1479e-7f7e-47e8-8d36-57ac1569f9ca)
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/0826fc21-2280-4a12-9aaa-ff3945cabc30)
 
