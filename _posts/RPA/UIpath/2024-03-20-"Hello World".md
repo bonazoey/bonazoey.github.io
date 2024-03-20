@@ -138,9 +138,9 @@ Spring Framework를 사용할 때에 비하면 굉장히 가시적이고 직관�
 
 액티비티를 시퀀스에 드래그 후 Win 키와 r을 입력해주었다.
 
-#### Type info
+#### Type into
 
-`Type info`는 텍스트를 작성해주는 액티비티이다.
+`Type into`는 텍스트를 작성해주는 액티비티이다.
 
 이를 통해 실행창을 연 후 notepad를 작성해주었다.
 
@@ -179,7 +179,7 @@ Spring Framework를 사용할 때에 비하면 굉장히 가시적이고 직관�
 
 이렇게 정상적으로 notepad가 실행되는 것을 확인했다.
 
-그 후 다시 Type info 액티비티로 "Hello World"를 작성해주면 끝!
+그 후 다시 Type into 액티비티로 "Hello World"를 작성해주면 끝!
 
 <br>
 
