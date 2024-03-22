@@ -12,6 +12,7 @@ banner:
   subheading_style: "color: gold"
 tags: [RPA, UIpath]
 top: false
+date: 2024-03-22 10:00:00 +0900
 ---
 
 ## 서론
