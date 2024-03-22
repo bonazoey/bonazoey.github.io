@@ -12,7 +12,6 @@ banner:
   subheading_style: "color: gold"
 tags: [Algorithm, Leetcode]
 top: false
-date: 2024-03-22 11:00:00 +0300
 ---
 
 ## 문제
