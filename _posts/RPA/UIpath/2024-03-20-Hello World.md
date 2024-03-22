@@ -12,6 +12,7 @@ banner:
   subheading_style: "color: gold"
 tags: [RPA, UIpath]
 top: 0
+date: 2024-03-22 09:00:00 +0300
 ---
 
 ## 기초지식
