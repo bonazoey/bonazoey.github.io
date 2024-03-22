@@ -6,12 +6,6 @@ author: Bonazoey
 categories: RPA
 banner:
   image: "./assets/images/planet.gif"
-  video: "./assets/images/planet.gif"
-  loop: true
-  volume: 0
-  start_at: 0
-  opacity: 0.618
-  background: "#000"
   height: "100vh"
   min_height: "38vh"
   heading_style: "font-size: 4.25em; font-weight: bold"
