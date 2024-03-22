@@ -86,10 +86,10 @@ RPA 개발에는 3가지 핵심 요소가 있는데 `스튜디오`, `로봇`, `�
 | 사용자에 의한 같은 기계에 의해 동작 | 분리된 기계에 의해서 동작 |
 | 작업 외에선 작동하지 않음 | 작업 외에도 작동 |
 
-#### * attended robot mechanism
+#### ● attended robot mechanism
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/dff0191e-4e6a-4c7c-913f-8c1d821aaf59)
 
-#### * unattended robot mechanism
+#### ● unattended robot mechanism
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/22e0a420-e8c3-4fa0-9ac9-23cab342e68b)
