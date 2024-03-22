@@ -1,0 +1,65 @@
+---
+layout: post
+title: "[UIpath] Studio & StudioX"
+subtitle: 이 사람은 둘 다 합니다.
+author: Bonazoey
+categories: RPA
+banner:
+  image: "./assets/images/planet.gif"
+  video: "./assets/images/planet.gif"
+  loop: true
+  volume: 0
+  start_at: 0
+  opacity: 0.618
+  background: "#000"
+  height: "100vh"
+  min_height: "38vh"
+  heading_style: "font-size: 4.25em; font-weight: bold"
+  subheading_style: "color: gold"
+tags: [RPA, UIpath]
+top: 1
+---
+
+## UIpath의 개발 툴
+
+> Studio & StudioX
+
+UIpath에는 두가지 개발 툴이 존재한다. 이전 포스팅에선 Studio로 진행을 했었는데 툴을 설치를 하면서 Studio와 StudioX 둘 중 선택하는 것이 있길래 좀 더 찾아보았다.
+
+### Studio
+
+**Studio** 는 RPA 개발자를 위한 툴로 코딩 지식이 기본 전제되어있으며 좀 더 많은 액티비티(검색해보니 약 600개 정도)를 사용할 수 있다.
+
+따라서 복잡성 있는 업무는 Studio를 이용한 RPA 개발자들이 하는 셈!
+
+### StudioX
+
+**StudioX** 는 코딩 지식이 필요하지 않다! 그렇기에 현업에서 협업 툴로 많이 이용되는 모양이다.
+
+그렇기 때문에 MS와 호환도 잘 되는 것 같다. 또 Studio에서 공통된 반복 업무들을 개발을 하고, 이 결과를 StudioX에서 받아 현업에 사용하는 것 같다. (이해한 바가 맞다면..)
+
+따라서 StudioX의 사용율이 현저히 높은 것 같은데.. 어쨌든 나는 두 가지 다 사용할 줄 알아야할 것이다.
+
+## 툴 전환
+
+나는 Studio를 미리 설치했고 StudioX도 설치하기 위해 인스톨러를 다시 실행했다.
+
+하지만 추가 인스톨은 되지 않았고 현재 설치된 Studio의 추가 기능을 변경하는 창만 뜰 뿐..
+
+구글링 결과, Stuio와 StudioX의 전환은 프로그램 실행 후 해당 프로그램 내 옵션에서 쉽게 바꿀 수 있었던 것!
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/a947974f-db99-4bbf-8f64-96eb745d9746)
+
+Stuio 실행 후 왼쪽 메뉴에서 설정에 들어가준다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/ae7f2bbc-0d9f-454f-91a0-932410c6327d)
+
+라이선스 및 프로필 > 프로필 변경 순으로 선택 후
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/72872929-1f68-4939-b974-17b914b5c396)
+
+쉽고 빠르게 변경해주면 된다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/f5777567-8a2e-4d34-ae45-48ec9c65d7a7)
+
+**Ta-Da!** StudioX로 전환된 것이 보인다.
