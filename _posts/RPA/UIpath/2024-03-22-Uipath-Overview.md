@@ -40,8 +40,6 @@ RPA 개발자는 이 중 Build 단계에 초점이 맞추어져있다.
 
 RPA 개발에는 3가지 핵심 요소가 있는데 `스튜디오`, `로봇`, `오케스트레이터`가 그것이다.
 
-![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e1bfafa8-11ad-436f-b08e-266f73032ff9)
-
 #### ● Studio
 
 **스튜디오**는 개발자가 프로젝트를 설계, 개발, 디버그하는 작업 환경이며 완성된 프로젝트를 로컬, 또는 **오케스트레이터**에 publish한다.
@@ -64,16 +62,17 @@ RPA 개발에는 3가지 핵심 요소가 있는데 `스튜디오`, `로봇`, `�
 
 ### 메커니즘
 
-![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/cd026bb2-a907-4a50-91af-a835f4c36b13)
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e1bfafa8-11ad-436f-b08e-266f73032ff9)
 
 **오케스트레이터**는 **로봇**에서 받은 신호를 통해 `attended`든 `unattened`든 모두에게 응답 신호를 보내게 된다.
 
 아케텍처에 여러 **오케스트레이터**가 있는 경우 이 작업을 실행하는 데 필요한 패키지는 외부 서버 스토리지에 저장이 된다.
 
-![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e625d443-ebb4-460d-be9e-f01ff0236b75)
-
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/cd026bb2-a907-4a50-91af-a835f4c36b13)
 
 **로봇**이 첫 작업을 실행할 때 로컬에서 워크플로가 사용될 수 없어 **오케스트레이터**에 워크플로를 요청하는데 이때 알맞은 스토리지로 이동해 로봇에게 전달하게 된다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e625d443-ebb4-460d-be9e-f01ff0236b75)
 
 **스튜디오**에서 새로 publish할 경우 **오케스트레이터**가 알아서 저장 위치를 옮기고 로봇에게 줄 프로세스를 전달한다.
 
@@ -81,11 +80,11 @@ RPA 개발에는 3가지 핵심 요소가 있는데 `스튜디오`, `로봇`, `�
 
 #### Robot
 
-| :attended: | :unattended: |
-| ---: | ---: |
-| :사용자나 관련 이벤트 의해 트리거: | :오케스트레이터에 의해 트리거: ||
-| :사용자에 의한 같은 기계에 의해 동작: | :분리된 기계에 의해서 동작: |
-| :작업 외에선 작동하지 않음: | :작업 외에도 작동: |||
+| attended: | unattended |
+| --- | --- |
+| 사용자나 관련 이벤트 의해 트리거 | 오케스트레이터에 의해 트리거 |
+| 사용자에 의한 같은 기계에 의해 동작 | 분리된 기계에 의해서 동작 |
+| 작업 외에선 작동하지 않음 | 작업 외에도 작동 |
 
 #### * attended robot mechanism
 
