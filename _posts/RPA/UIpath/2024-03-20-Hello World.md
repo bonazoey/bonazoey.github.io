@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[UIpath] 'Hello World (Studio)'"
+title: "[UIpath] 'Hello World' (Studio)"
 subtitle: 이 사람은 로봇입니다.
 author: Bonazoey
 categories: RPA
