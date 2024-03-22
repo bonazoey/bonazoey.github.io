@@ -5,7 +5,7 @@ subtitle: 이 사람은 로봇입니다.
 author: Bonazoey
 categories: Alogorithm
 banner:
-  image: "./assets/images/coding-robot.gif"
+  image: "./assets/images/Agrt.gif"
   height: "100vh"
   min_height: "38vh"
   heading_style: "font-size: 4.25em; font-weight: bold"
@@ -18,7 +18,7 @@ top: 1
 
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/a9c840fb-747e-495f-92cc-deaabd5c5329)
 
-[문제 링크]: https://leetcode.com/problems/array-partition/
+[문제 링크](https://leetcode.com/problems/array-partition/){: target="_blank"}
 
 주어진 배열의 원소 들을 두 개씩 쌍을 이루어 그 쌍 중 최소값들의 합이 최대값이 되는 알고리즘
 
