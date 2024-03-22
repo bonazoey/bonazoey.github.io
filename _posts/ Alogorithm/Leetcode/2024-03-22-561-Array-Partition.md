@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Leetcode] 561. Array Partition"
-subtitle: 이 사람은 로봇입니다.
+subtitle: 둘이 먹다 하나가 죽었는데 그걸 또 합침
 author: Bonazoey
 categories: Alogorithm
 banner:
