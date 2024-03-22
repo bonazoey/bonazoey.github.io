@@ -1,0 +1,96 @@
+---
+layout: post
+title: "[UIpath] UIpath Overview"
+subtitle: 이 사람은 로봇일까요?.
+author: Bonazoey
+categories: RPA
+banner:
+  image: "./assets/images/planet.gif"
+  video: "./assets/images/planet.gif"
+  loop: true
+  volume: 0
+  start_at: 0
+  opacity: 0.618
+  background: "#000"
+  height: "100vh"
+  min_height: "38vh"
+  heading_style: "font-size: 4.25em; font-weight: bold"
+  subheading_style: "color: gold"
+tags: [RPA, UIpath]
+top: 1
+---
+
+이제 새롭게 시작하는 RPA 개발자로서 이 업무에 대해 좀 더 알아보고자 한다.
+
+## RPA Developer
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/ec0f8b17-2e50-4e08-bf6b-9fd14ad5355f)
+
+RPA 개발자는 이 중 Build 단계에 초점이 맞추어져있다.
+
+하지만 프로젝트나 이해관계자와의 의사소통을 위해 다른 단계에도 집중할 필요가 있다.
+
+어쨌든 main은 `Build`라는 것
+
+## RPA Development
+
+### Core Components (Studio-Robot-Orchestrator)
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/fd22f2cb-22d5-42af-916d-46949f087f51)
+
+RPA 개발에는 3가지 핵심 요소가 있는데 `스튜디오`, `로봇`, `오케스트레이터`가 그것이다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e1bfafa8-11ad-436f-b08e-266f73032ff9)
+
+#### ● Studio
+
+**스튜디오**는 개발자가 프로젝트를 설계, 개발, 디버그하는 작업 환경이며 완성된 프로젝트를 로컬, 또는 **오케스트레이터**에 publish한다.
+
+#### ● Orchestrator
+
+**오케스트레이터**에서는 프로젝트의 자동화 관리, 제어, 모니터링하며 버전과 프로젝트를 패키지 단위(publish된 자동화 프로젝트)로 묶고 어떠한 패키지들은 폴더 단위로 묶고 배포한다. (개발자가 사용하는 라이브러리, 재사용 요소, 프로세스 등에 대한 저장소 역할) 여기서 패키지 단위는 로봇이 실행 불가능하며 해당 폴더에 액세스 권한이있는 로봇만 폴더를 실행할 수 있다.
+
+따라서 프로젝트의 **스튜디오**와 **로봇**의 인터페이스 역할을 한다.
+
+#### ● Robot
+
+**로봇**은 `attended`로봇과 `unattended`로봇으로 나뉘는데 이 로봇들은 **오케스트레이터**에 주기적으로 (Academy 영상에선 every 30s.) 신호를 보내게 된다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/596d86d1-06c0-42e7-8533-6cf235c8b7e6)
+
+사용자는 UIpath assistant를 통해 로봇을 통한 트리거로 해당 워크플로를 실행할 수 있는데, 이 때 사용되는 로봇이 `attended robot`이다. 이 로봇은 동일한 기계에서만 작업하게 되는데 여기서 UIpath assistant는 사용자와 로봇간의 인터페이스를 제공하는 프로그램이다. 
+
+사용자의 개입 없이 별도 기기에 비치된 로봇을 `unattended robot`이라고 하고 **오케스트레이터**에 의해 시작되고 관리된다.(보통 VM) 이 로봇은 사용자의 입력을 최소화 하기 때문에 논스톱으로 중단 없이 작동한다.
+
+### 메커니즘
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/cd026bb2-a907-4a50-91af-a835f4c36b13)
+
+**오케스트레이터**는 **로봇**에서 받은 신호를 통해 `attended`든 `unattened`든 모두에게 응답 신호를 보내게 된다.
+
+아케텍처에 여러 **오케스트레이터**가 있는 경우 이 작업을 실행하는 데 필요한 패키지는 외부 서버 스토리지에 저장이 된다.
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/e625d443-ebb4-460d-be9e-f01ff0236b75)
+
+
+**로봇**이 첫 작업을 실행할 때 로컬에서 워크플로가 사용될 수 없어 **오케스트레이터**에 워크플로를 요청하는데 이때 알맞은 스토리지로 이동해 로봇에게 전달하게 된다.
+
+**스튜디오**에서 새로 publish할 경우 **오케스트레이터**가 알아서 저장 위치를 옮기고 로봇에게 줄 프로세스를 전달한다.
+
+### 정리
+
+#### Robot
+
+| :attended: | :unattended: |
+| ---: | ---: |
+| :사용자나 관련 이벤트 의해 트리거: | :오케스트레이터에 의해 트리거: ||
+| :사용자에 의한 같은 기계에 의해 동작: | :분리된 기계에 의해서 동작: |
+| :작업 외에선 작동하지 않음: | :작업 외에도 작동: |||
+
+#### * attended robot mechanism
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/dff0191e-4e6a-4c7c-913f-8c1d821aaf59)
+
+#### * unattended robot mechanism
+
+![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/22e0a420-e8c3-4fa0-9ac9-23cab342e68b)
