@@ -63,3 +63,9 @@ Stuio 실행 후 왼쪽 메뉴에서 설정에 들어가준다.
 ![image](https://github.com/bonazoey/bonazoey.github.io/assets/142956374/f5777567-8a2e-4d34-ae45-48ec9c65d7a7)
 
 **Ta-Da!** StudioX로 전환된 것이 보인다.
+
+## 추가
+
+Studio와 StudioX 외에 Studio Pro도 존재하는 걸 알았다.
+
+Studio Pro는 advanced 개발자용으로 이 고급 IDE는 자동화 테스트 도구, RPA 테스팅, 고급 코딩 서비스를 지원한다.
