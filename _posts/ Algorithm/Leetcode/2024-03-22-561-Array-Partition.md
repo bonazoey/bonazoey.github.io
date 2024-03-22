@@ -11,7 +11,7 @@ banner:
   heading_style: "font-size: 4.25em; font-weight: bold"
   subheading_style: "color: gold"
 tags: [Algorithm, Leetcode]
-top: 1
+top: 3
 ---
 
 ## 문제
