@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[UIpath] 'Hello World (StudioX)"
+title: "[UIpath] 'Hello World' (StudioX)"
 subtitle: 이 사람은 인사합니다.
 author: Bonazoey
 categories: RPA
