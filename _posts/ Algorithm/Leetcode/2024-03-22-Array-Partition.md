@@ -3,8 +3,7 @@ layout: post
 title: "[Leetcode] 561. Array Partition"
 subtitle: 둘이 먹다 하나가 죽었는데 그걸 또 합침
 author: Bonazoey
-categories:
-  Algorithm: Leetcode
+categories: Algorithm
 banner:
   image: "./assets/images/Agrt.gif"
   height: "100vh"
