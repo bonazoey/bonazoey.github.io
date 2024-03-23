@@ -3,14 +3,24 @@ layout: framework
 sidebar: category-list
 ---
 
-{%- if site.posts.size > 0 -%}
-
+{% if site.posts.size > 0 %}
   {%- include functions.html func='log' level='debug' msg='Get value' -%}
   {%- include functions.html func='get_categories' -%}
   {% assign categories = return %}
 
-  {% assign keys = categories %}
+  {% assign keys = categories | map: 'name' %}
   {% assign field = 'categories' %}
   {%- include views/segments.html -%}
-
-{%- endif -%}
+// 새로추가 - 서브카테고리
+  {% for category in categories %}
+    <h2>{{ category.name }}</h2>
+    {% if category.subcategories.size > 0 %}
+      <ul>
+        {% for subcategory in category.subcategories %}
+          <li>{{ subcategory }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endfor %}
+// 여기까지
+{% endif %}
