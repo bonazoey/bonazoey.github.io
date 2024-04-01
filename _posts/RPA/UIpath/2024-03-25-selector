@@ -1,0 +1,44 @@
+---
+layout: post
+title: "[UIpath] Selector & 'attach' Activites"
+subtitle: 이 사람은 봅니다.
+author: Bonazoey
+categories: RPA
+banner:
+  image: "./assets/images/planet.gif"
+  height: "100vh"
+  min_height: "38vh"
+  heading_style: "font-size: 4.25em; font-weight: bold"
+  subheading_style: "color: gold"
+tags: [RPA, UIpath]
+top: false
+date: 2024-03-25 09:00:00 +0900
+---
+
+UIpath를 이용하여 RPA를 구현하다가 어느 부분에서 막힐 때가 종종 있는데,
+
+`Use Application/Browser` 액티비티 내에서 시퀀스를 만들다가 새 창이나 탭으로 넘어가면서 생기는 문제였다.
+
+이 때 이것저것 찾아보다가 `셀렉터`의 개념을 알게되었다.
+
+## Selector
+ 
+> xml 조각으로 저장된 주소 및 속성을 통해 사용자 인터페이스 요소를 식별할 수 있는 기능
+
+셀렉터는 UIpath 외에도 다른 곳(Js, Jquery 등)에서도 비슷한 의미로 사용이되지만 간단히 말하자면 특정한 속성을 통해서 엘리먼트를 구분하는 기능이라고 보면된다.
+
+내가 프로세스 구현을 진행하다가 막혔던 것도 새 탭이나 창으로 넘어갈 때 셀렉터를 넘어간 창으로 따로 지정해주지 않았기 때문이었다.
+
+### Window Selector
+
+UIpath에서 만나볼 수 있는 셀렉터의 종류엔 크게 두 가지가 있는 것 같다. 그 중 하나가 Window Selector인데, 이것은 말 그대로 창을 바라보는 곳을 지정해주는 것이다. 
+
+### Target Selector
+
+## 'attach' Activities
+
+### attach browser
+
+### attach window
+
+## 마치며
