@@ -5,7 +5,7 @@ subtitle:
 author: Bonazoey
 categories: Java
 banner:
-  image: 
+  image: "./assets/images/Agrt.gif"
   height: "100vh"
   min_height: "38vh"
   heading_style: "font-size: 4.25em; font-weight: bold"
