@@ -13,7 +13,6 @@ banner:
 tags: [RPA, UIpath]
 top: false
 date: 2024-03-26 09:00:00 +0900
-published : false
 ---
 
 UIpath Studio를 사용하며 작업을 하다보니 기본 액티비티 외에 다른 기능이 필요한 일이 생겼다.
