@@ -13,7 +13,6 @@ banner:
 tags: [Algorithm, Baekjoon]
 date: 2024-04-02 09:00:00 +0900
 top: false
-published : false
 ---
 
 ## 문제
