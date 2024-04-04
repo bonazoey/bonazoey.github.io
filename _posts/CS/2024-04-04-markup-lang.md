@@ -10,10 +10,9 @@ banner:
   min_height: "38vh"
   heading_style: "font-size: 4.25em; font-weight: bold"
   subheading_style: "color: gold"
-tags: [CS, ,Markup, Language, Extension]
+tags: [CS, Markup, Language, Extension]
 date: 2024-04-04 09:00:00 +0900
 top: false
-published : false
 ---
 
 개발자로 몸을 담은 후 부터 특히 많이 들리는 단어들이 몇몇있다. 그 중 하나가 `Mark-up 언어`인데, html을 배우면서 그냥 마크업 언어구나 하고 넘겼었지만 이번에 조금 더 자세히 알아보려고 한다.
