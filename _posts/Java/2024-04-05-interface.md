@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Java] Interface"
-subtitle: 
+subtitle: 명령을 따라야 합니다?
 author: Bonazoey
 categories: Java
 banner:
