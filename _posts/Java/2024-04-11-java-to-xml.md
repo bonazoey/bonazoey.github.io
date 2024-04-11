@@ -13,7 +13,6 @@ banner:
 tags: [Java, XML]
 top: false
 date: 2024-04-11 09:00:00 +0900
-published: false
 ---
 
 저번 포스팅에선 XML 문서를 XML DOM으로 파싱하여 Java로 변환하는 과정을 보았다.
