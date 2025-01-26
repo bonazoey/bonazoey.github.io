@@ -1,7 +1,7 @@
 ---
 layout: post
-title: [Data Analysis] 데이터 프레임
-subtitle: 주피터라는 머시기.. 와 함께
+title: "[Data Analysis] 데이터 프레임"
+subtitle: "주피터라는 머시기.. 와 함께"
 author: Bonazoey
 categories: Python
 banner:
