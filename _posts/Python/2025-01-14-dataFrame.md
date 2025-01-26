@@ -29,27 +29,344 @@ Jypyter lab은 코드 한 줄씩 실행이 가능하여 코드 테스트가 쉽�
 
 ---
 
-## 라이브러리
+## 패키지
+
+해당 포스트의 사용 패키지
 
 ~~~python
-import pandas as pd # 데이터 프레임?
-import numpy as np # 연산?
-imper as sns # 그래프?
+import pandas as pd # 데이터 핸들링 패키지
+import numpy as np # 요약통계량 연산
+import seaborn as sns # 그래프
 ~~~
 
-## 이전 파트
+### 설치
 
-.head()
-.tail()
-.mean()
-.sum()
-.agg()
-.read_csv()
-where
-sns.boxplot
-\ # 메서드 체이닝
+아나콘다 프롬프트에 `conda install pandas` 라고 입력하면 해당 패키지가 설치됨
 
-## 데이터 결합 파트 3 챕터 5
+## 기본 함수
+
+### 내장 함수
+
+앞에 패키지 명을 쓰지 않고 바로 사용할 수 있다.
+
+`info()` : 해당 데이터의 정보를 볼 수 있다. (데이터 타입 등)
+
+`sum()` : 합
+
+`mean()` : 평균
+
+.
+
+.
+
+.
+
+`agg(1 = (2, 3))` : 요약통계량 구하기, 2 변수의 3 연산 값을 1 변수에 대입
+
+`head()` : 상위 데이터 n개 추출, 파라미터 없을 시 5개 추출
+
+`tail()` : 하위 데이터 n개 추출, 파라미터 없을 시 5개 추출
+
+### 패키지 함수
+
+패키지명 뒤에 함수명이 온다.
+
+해당 패키지에 무슨 함수가 있는지 모르면 검색해보자..
+
+`pd.DataFrame()` : 데이터 프레임화 하기
+
+`pd.read_csv()` : csv 파일 불러오기
+
+`?.to_csv()` : csv로 저장
+
+`pd.read_excel()` : excel 파일 불러오기
+
+`np.where(1, 2, 3)` : 1 조건에 해당할 경우 2, 아닐 경우 3
+
+`sns.boxplot()` : 박스 플롯으로 나타내기
+
+`sns.countplot(data = 1, x = 2, hue = 3)` : 카운트 플롯으로 나타내는데 ..
+
+.
+
+.
+
+### 기타
+
+`\` : 메서드 체이닝, 가독성을 위해 줄 바꿈할 때 사용한다.
+
+## 데이터 추출
+
+### 조건 추출
+
+query 함수는 조건에 해당하는 데이터를 추출할 수 있다.
+
+~~~python
+exam.query('nclass == 1') # nclass 변수가 1인 데이터만 추출
+exam.query('math > 50') # math가 50보다 큰 데이터만 추출
+exam.query('nclass in [1, 3, 5]') # nclass 변수가 1, 3, 5인 데이터만 추출
+.
+.
+~~~
+
+### 변수 추출
+
+원하는 변수 추출은 '[]'를 사용한다
+
+~~~python
+exam['math'] # 시리즈 형태로 추출
+exam[['math']] # 데이터 프레임 형태로 추출
+~~~
+
+### 변수 제외
+
+해당 변수 제외하고 추출하고 싶다면 `drop()` 함수를 사용한다.
+
+~~~python
+exam.drop(columns = ['math', 'english']) # math와 english 변수를 제외 하고 추출
+~~~
+
+### 혼합 추출
+
+변수 추출 시 조건을 주고싶으면 그냥 같이 쓰면 됨
+
+~~~python
+exam.query('nclass == 2')['math'] # nclass가 2인 데이터의 math 변수만 추출
+
+~~~
+
+## 데이터 정렬
+
+~~~python
+exam.sort_values('math') # math 변수 오름차순으로 정렬
+exam.sort_values('math', ascending = False) # math 변수 내림차순으로 정렬
+
+# 여러 변수에 대해 정렬도 똑같다.
+exam.sort_values(['nclass', 'math'], ascending = [True, False]) # nclass 변수에 대해 오름차순, math 변수에 대해 내림차순 정렬
+~~~
+
+## 파생 변수
+
+데이터 프레임에 새로운 변수를 추가하려면 assign을 사용하면 된다.
+
+~~~python
+# 변수 math, english, exam의 합을 total이라는 변수에 담아 exam 데이터 프레임에 추가
+exam.assign(total = exam['math'] + exam['english'] + exam['science']) 
+~~~
+
+함수 중첩 사용도 가능하다
+
+~~~python
+# numpy 패키지 임포트
+import numpy as np
+# numpy의 where에 해당하는 값을 test 변수에 넣고 exam 데이터 프레임에 추가함
+exam.assign(test = np.where(exam['science'] >= 60, 'pass', 'fail'))
+~~~
+
+람다도 이용 가능함!
+
+~~~python
+# 둘이 같음
+exam.assign(total = exam['math'] + exam['english'] + exam['science'])
+exam.assign(total = lambda x: x['math'] + x['english'] + x['science'])
+~~~
+
+아래는 람다 이용해야만 함..
+
+~~~python
+exam.assign(total = exam['math'] + exam['english'] + exam['science'],
+            mean = exam['total'] / 3)
+# keyError : 'total' -> 아직 total이라는 변수가 할당되지 않아 찾을 수 없어 에러가 뜸
+
+exam.assign(total = exam['math'] + exam['english'] + exam['science'],
+            mean = lambda x: x['total'] / 3)
+# 위와 같이 람다를 이용하면 assign에 의해 total이 추가된 변수인 것을 인식하고 데이터 편집이 가능
+
+exam.assign(total = lambda x: x['math'] + x['english'] + x['science'],
+            mean = lambda x: x['total'] / 3)
+# 결국은 이렇게 사용함
+~~~
+
+## 데이터 요약
+
+`agg` 함수를 이용해 요약통계량을 구한다
+
+~~~python
+exam.agg(mean_math = ('math', 'mean')) # math 평균 산출
+~~~
+
+### 집단별 요약
+
+`groupby()` 함수를 사용해 집단별로 구할 수 있다.
+
+~~~python
+exam.groupby('nclass') \ # nclass 별로 분리
+    .agg(mean_math = ('math', 'mean')) # math 평균 산출
+~~~
+
+한 번에 구할 수도 있다.
+
+~~~python
+exam.groupby('nclass') \ # nclass 별로 분리
+    .agg(mean_math = ('math', 'mean'), # math 평균 산출
+        sum_math = ('math', 'sum'), # math 합 산출
+        median_math = ('math', 'median'), # math 중앙값 산출
+        n = ('nclass', 'count')) # 빈도 (학생 수)
+~~~
+
+요약통계량으로 구한 변수를 출력하면 데이터 프레임으로 나타나지 않고 인덱스의 형태로 나타나게 된다. groupby 함수에 as_index 파라미터를 False로 지정해주면 인덱스가 아닌 데이터 프레임으로 나타낼 수 있다.
+
+~~~python
+exam.groupby('nclass', as_index = False) \
+    .agg(mean_math = ('math', 'mean'))
+~~~
+
+#### 하위 집단별로 나누기
+
+groupby 시 하위 집단으로 또 나눌 수 있음
+
+~~~python
+mpg.groupby(['manufacturer', 'drv']) \ # manufacturer로 그룹화 후 그 안에서 drv로 하위 그룹화
+    .agg(mean_cty = ('cty', 'mean'))
+~~~
+
+### 다른 방법
+
+`agg()` 함수를 사용하지 않고 요약통계량을 구할 수 있다.
+
+~~~python
+mpg.groupby('drv') \
+    .agg(n = ('drv', 'count'))
+
+mpg['drv'].value_counts()
+
+# 위와 아래 출력 값은 똑같이 나오지만 `query` 함수를 사용할 때 문제가 될 수 있다.
+# `query` 함수는 데이터 프레임에만 사용할 수 있는데 아래의 값의 경우 데이터 프레임이 아닌 시리즈 형태로 나오기 때문이다.
+
+mpg['drv'].value_counts() \
+          .to_frame('n') \
+          .query('n > 100')
+
+# 뭐 이런식으로 `to_frame()`을 사용하여 데이터 프레임화 한 후 사용할 수 있긴하다.
+~~~
+
+### 자주 사용하는 요약통계량 함수
+
+`sum()` : 합
+`mean()` : 평균
+`max()` : 최대값
+`min()` : 최소값
+`len()` : 개수
+`std()` : 표준편차
+`count()` : 빈도(개수)
+
+## 데이터 시각화 (그래프)
+
+`seaborn` 패키지를 사용한다.
+
+~~~python
+import seaborn as sns
+~~~
+
+### 산점도
+
+나이와 소득처럼 연속 값으로 된 두 변수의 관계를 표현할 때 사용한다.
+
+`sns.scatterplot()` 함수를 사용한다.
+
+~~~python
+sns.scatterplot(data = mpg, x = 'displ', y = 'hwy') \ # mpg 변수에 담긴 데이터의 x 값에 'displ' y 값에 'hwy'로 타나낸다.
+    .set(xlim = [3, 6], ylim = [10, 30]) # x 값의 범위를 3 ~ 6으로 고정, y 값의 범위를 10 ~ 30으로 고정
+
+# 'hue' 파라미터를 사용하면 변수의 값들을 해당 값으로 구분해줄 수 있다.
+sns.scatterplot(data = mpg, x = 'displ', y = 'hwy', hue = 'drv') # 'drv' 변수에 따라 색으로 구분
+~~~
+
+### 막대그래프
+
+성별과 소득처럼 집단 간 차이를 표현할 때 사용한다.
+
+`sns.barplot()` 함수를 사용한다
+
+~~~python
+# 그룹화한 데이터를 만들어준다.
+df_mpg = mpg.groupby('drv', as_index = False) \ # 'drv' 변수가 인덱스로 나타나지 않게 하기 위해 'as_index = False'를 파라미터로 넘겨준다
+            .agg(mean_hwy = ('hwy', 'mean'))
+sns.barplot(data = df_mpg, x = 'drv', y = 'mean_hwy') # 말 안 해도 알겨
+
+# 막대 그래프를 정렬하고 싶다면 df_mpg 변수를 정렬해주면 된다.
+df_mpg = df_mpg.sort_values('mean_hwy', ascending = False)
+sns.barplot(data = df_mpg, x = 'drv', y = 'mean_hwy')
+~~~
+
+### 선 그래프
+
+시계열 데이터(환율, 주가지수 등 경제지표처럼 시간에 따라 변하는 데이터)를 표현할 때 사용한다.
+
+`sns.lineplot()` 함수를 사용한다.
+
+~~~python
+sns.lineplot(data = economics, x = 'date', y = 'unemploy')
+
+economics.info() # 변수 타입을 확인해보면 date가 object 타입으로 되어있어 그래프 표현 시 매끄럽게 표현이 되지 않는다.
+economics['date2'] = pd.to_datetime(economics['date']) # pandas 패키지의 to_datetime() 함수를 사용하여 데이터 타입을 datetime으로 바꿔준 후 사용한다.
+
+# 연, 월, 일 추출
+economics['date2'].dt.year
+economics['date2'].dt.month
+economics['date2'].dt.day
+# 'date' 변수는 안 됨. datetime 타입으로 변경한 'date2'만 가능하다.
+# 'date' 변수에 사용 시 : ...AttributeError : Can only use .dt accessor with datetimelike values 에러가 발생
+
+# 그래프에 연도 별로 추출하기
+economics['year'] = economics['date2'].dt.year # 연도만 뽑은 데이터를 year 변수에 할당
+sns.lineplot(data = economics, x = 'year', y = 'unemploy') # 연도별로 선 그래프가 나타남
+
+# 신뢰 구간 제거
+sns.lineplot(data = economics, x = 'year', y = 'unemploy', errorbar = None) # errorbar = None으로 신뢰구간을 제거하고 나타낸다.
+~~~
+
+### 상자 그림
+
+분포를 알 수 있는 그래프로 평균만 볼 때보다 데이터 특징을 좀 더 자세히 볼 수 있다.
+
+데이터 분석 그래프 중 가장 중요하다.
+
+`sns.boxplot()` 함수를 사용한다.
+
+* 상자의 가로 선분 : 중앙값
+
+* 상자의 아랫면 : 상위 25% 지점 (1분위 수)
+
+* 상재의 윗면 : 상위 75% 지점 (3분위 수)
+
+* 상자 밖 가로 선분 : 최대값과 최소값
+
+* 상자 밖 점 : 극단치
+
+#### 극단치 구하는 법
+
+* 4분위 거리 (IQR) = 1분위 수 - 3분위 수
+
+* 1.5 IQR = IQR * 1.5 
+
+* 아래 극단치 = 1분위 수 - 1.5 IQR 보다 작은 값
+
+* 위 극단치 = 3분위 수 + 1.5 IQR 보다 큰 값
+
+
+~~~python
+# 값을 수동으로 정렬하기
+sns.boxplot(data = mpg, x = 'drv', y = 'hwy', order = ['f', 'r', '4']) # order 파라미터를 이용해 그래프 순서를 정렬해준다.
+
+# 값에 따른 정렬 자동으로 하기
+drv_order = mpg.groupby('drv')['hwy'].median().sort_values(ascending = False) # 중앙값 별로 내림차순으로 정렬. 인덱스로 나타난다.
+drv_order.index # 해당 변수의 인덱스를 출력 (이 값을 order 파라미터의 값으로 넣어주면 됨
+
+sns.boxplot(data = mpg, x = 'drv', y = 'hwy', order = drv_order.index) # drv_order의 중앙값에 따라 내림차순으로 자동으로 정렬되어 나타난다.
+~~~
+
+## 데이터 결합 (파트 3 챕터 5)
 
 ### 열 추가
 
