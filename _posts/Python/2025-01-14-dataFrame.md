@@ -29,7 +29,7 @@ Jypyter lab은 코드 한 줄씩 실행이 가능하여 코드 테스트가 쉽�
 
 ---
 
-## 패키지
+## 1. 패키지
 
 해당 포스트의 사용 패키지
 
@@ -39,13 +39,13 @@ import numpy as np # 요약통계량 연산
 import seaborn as sns # 그래프
 ~~~
 
-### 설치
+### 1.1. 설치
 
 아나콘다 프롬프트에 `conda install pandas` 라고 입력하면 해당 패키지가 설치됨
 
-## 기본 함수
+## 2. 함수
 
-### 내장 함수
+### 2.1. 내장 함수
 
 앞에 패키지 명을 쓰지 않고 바로 사용할 수 있다.
 
@@ -67,7 +67,7 @@ import seaborn as sns # 그래프
 
 `tail()` : 하위 데이터 n개 추출, 파라미터 없을 시 5개 추출
 
-### 패키지 함수
+### 2.2. 패키지 함수
 
 패키지명 뒤에 함수명이 온다.
 
@@ -91,13 +91,13 @@ import seaborn as sns # 그래프
 
 .
 
-### 기타
+### 2.3. 기타
 
 `\` : 메서드 체이닝, 가독성을 위해 줄 바꿈할 때 사용한다.
 
-## 데이터 추출
+## 3. 데이터 추출
 
-### 조건 추출
+### 3.1. 조건 추출
 
 query 함수는 조건에 해당하는 데이터를 추출할 수 있다.
 
@@ -109,7 +109,7 @@ exam.query('nclass in [1, 3, 5]') # nclass 변수가 1, 3, 5인 데이터만 추
 .
 ~~~
 
-### 변수 추출
+### 3.2. 변수 추출
 
 원하는 변수 추출은 '[]'를 사용한다
 
@@ -118,7 +118,7 @@ exam['math'] # 시리즈 형태로 추출
 exam[['math']] # 데이터 프레임 형태로 추출
 ~~~
 
-### 변수 제외
+### 3.3. 변수 제외
 
 해당 변수 제외하고 추출하고 싶다면 `drop()` 함수를 사용한다.
 
@@ -126,7 +126,7 @@ exam[['math']] # 데이터 프레임 형태로 추출
 exam.drop(columns = ['math', 'english']) # math와 english 변수를 제외 하고 추출
 ~~~
 
-### 혼합 추출
+### 3.4. 혼합 추출
 
 변수 추출 시 조건을 주고싶으면 그냥 같이 쓰면 됨
 
@@ -134,7 +134,7 @@ exam.drop(columns = ['math', 'english']) # math와 english 변수를 제외 하�
 exam.query('nclass == 2')['math'] # nclass가 2인 데이터의 math 변수만 추출
 ~~~
 
-## 데이터 정렬
+## 4. 데이터 정렬
 
 ~~~python
 exam.sort_values('math') # math 변수 오름차순으로 정렬
@@ -144,7 +144,7 @@ exam.sort_values('math', ascending = False) # math 변수 내림차순으로 정
 exam.sort_values(['nclass', 'math'], ascending = [True, False]) # nclass 변수에 대해 오름차순, math 변수에 대해 내림차순 정렬
 ~~~
 
-## 파생 변수
+## 5. 파생 변수
 
 데이터 프레임에 새로운 변수를 추가하려면 assign을 사용하면 된다.
 
@@ -186,7 +186,7 @@ exam.assign(total = lambda x: x['math'] + x['english'] + x['science'],
 # 결국은 이렇게 사용함
 ~~~
 
-## 데이터 요약
+## 6. 데이터 요약
 
 `agg` 함수를 이용해 요약통계량을 구한다
 
@@ -194,7 +194,7 @@ exam.assign(total = lambda x: x['math'] + x['english'] + x['science'],
 exam.agg(mean_math = ('math', 'mean')) # math 평균 산출
 ~~~
 
-### 집단별 요약
+### 6.1. 집단별 요약
 
 `groupby()` 함수를 사용해 집단별로 구할 수 있다.
 
@@ -220,7 +220,7 @@ exam.groupby('nclass', as_index = False) \
     .agg(mean_math = ('math', 'mean'))
 ~~~
 
-#### 하위 집단별로 나누기
+#### 6.1.1. 하위 집단별로 나누기
 
 groupby 시 하위 집단으로 또 나눌 수 있음
 
@@ -229,7 +229,7 @@ mpg.groupby(['manufacturer', 'drv']) \ # manufacturer로 그룹화 후 그 안�
     .agg(mean_cty = ('cty', 'mean'))
 ~~~
 
-### 다른 방법
+### 6.2. 다른 방법
 
 `agg()` 함수를 사용하지 않고 요약통계량을 구할 수 있다.
 
@@ -249,7 +249,7 @@ mpg['drv'].value_counts() \
 # 뭐 이런식으로 `to_frame()`을 사용하여 데이터 프레임화 한 후 사용할 수 있긴하다.
 ~~~
 
-### 자주 사용하는 요약통계량 함수
+### 6.3. 자주 사용하는 요약통계량 함수
 
 `sum()` : 합
 
@@ -265,7 +265,7 @@ mpg['drv'].value_counts() \
 
 `count()` : 빈도(개수)
 
-## 데이터 시각화 (그래프)
+## 7. 데이터 시각화 (그래프)
 
 `seaborn` 패키지를 사용한다.
 
@@ -273,7 +273,7 @@ mpg['drv'].value_counts() \
 import seaborn as sns
 ~~~
 
-### 산점도
+### 7.1. 산점도
 
 나이와 소득처럼 연속 값으로 된 두 변수의 관계를 표현할 때 사용한다.
 
@@ -287,7 +287,7 @@ sns.scatterplot(data = mpg, x = 'displ', y = 'hwy') \ # mpg 변수에 담긴 데
 sns.scatterplot(data = mpg, x = 'displ', y = 'hwy', hue = 'drv') # 'drv' 변수에 따라 색으로 구분
 ~~~
 
-### 막대그래프
+### 7.2. 막대그래프
 
 성별과 소득처럼 집단 간 차이를 표현할 때 사용한다.
 
@@ -304,7 +304,7 @@ df_mpg = df_mpg.sort_values('mean_hwy', ascending = False)
 sns.barplot(data = df_mpg, x = 'drv', y = 'mean_hwy')
 ~~~
 
-### 선 그래프
+### 7.3. 선 그래프
 
 시계열 데이터(환율, 주가지수 등 경제지표처럼 시간에 따라 변하는 데이터)를 표현할 때 사용한다.
 
@@ -331,7 +331,7 @@ sns.lineplot(data = economics, x = 'year', y = 'unemploy') # 연도별로 선 �
 sns.lineplot(data = economics, x = 'year', y = 'unemploy', errorbar = None) # errorbar = None으로 신뢰구간을 제거하고 나타낸다.
 ~~~
 
-### 상자 그림
+### 7.4. 상자 그림
 
 분포를 알 수 있는 그래프로 평균만 볼 때보다 데이터 특징을 좀 더 자세히 볼 수 있다.
 
@@ -349,7 +349,7 @@ sns.lineplot(data = economics, x = 'year', y = 'unemploy', errorbar = None) # er
 
 * 상자 밖 점 : 극단치
 
-#### 극단치 구하는 법
+#### 7.4.1. 극단치 구하는 법
 
 * 4분위 거리 (IQR) = 1분위 수 - 3분위 수
 
@@ -371,9 +371,9 @@ drv_order.index # 해당 변수의 인덱스를 출력 (이 값을 order 파라�
 sns.boxplot(data = mpg, x = 'drv', y = 'hwy', order = drv_order.index) # drv_order의 중앙값에 따라 내림차순으로 자동으로 정렬되어 나타난다.
 ~~~
 
-## 데이터 결합 (파트 3 챕터 5)
+## 8. 데이터 결합 (파트 3 챕터 5)
 
-### 열 추가
+### 8.1. 열 추가
 
 데이터를 가로로 추가하는 것(열 추가)은 'merge' 함수를 사용한다.
 
@@ -388,7 +388,7 @@ total
 
 how 파라미터에 결합하는 방향을 적는다 'left, right 등' 첫 변수 데이터 테이블인 test1의 왼쪽 방향으로 병합이 되며 'on' 파라미터로 넘긴 컬럼명을 기준으로 합쳐진다.
 
-### 행 추가
+### 8.2. 행 추가
 
 데이터를 세로로 추가하는 것(행 추가)은 'concat' 함수를 사용한다.
 
@@ -411,13 +411,13 @@ group_all
 group_all = pd.concat([group_a, group_b], ignore_index = True)
 ~~~
 
-## 데이터 정제
+## 9. 데이터 정제
 
-### 결측치 : 누락 값
+### 9.1. 결측치 : 누락 값
 
 결측치가 있다면 제거하거나 채워넣는 방법이 있다.
 
-1.1. 결측치 제거
+#### 9.1.1. 결측치 제거
 
 ~~~python
 import numpy as np
@@ -447,7 +447,7 @@ df_nomiss2 = df.dropna() # 모든 행에 대해 결측치 제거
 
 pandas에서 결측치를 제거하지 않고 연산을 진행하면 자동으로 결측치를 제거하고 연산한다. (mean, su, agg, ...) 
 
-1.2. 결측치 대체
+#### 9.1.2. 결측치 대체
 
 결측치가 많아 데이터 손실이 많은 경우 사용한다
 
@@ -463,7 +463,7 @@ exam['math'] = exam['math].fillna(exam['math'].mean()) # 결측치를 평균값�
 
 '.fillna()' 함수를 이용하여 해당 변수의 결측치에 일괄적으로 값을 할당할 수 있다.
 
-### 이상치
+### 9.2. 이상치
 
 이상치는 정상 범주에서 벗어난 값이다.
 
@@ -476,7 +476,7 @@ exam['math'] = exam['math].fillna(exam['math'].mean()) # 결측치를 평균값�
 
 추가로 '.sort_index()' 함수로 인덱스 별로 정렬을하면 보기가 더 편하다.
 
-#### 존재할 수 없는 값
+#### 9.2.1. 존재할 수 없는 값
 
 ~~~python
 outlier['score'] = np.where(outlier['score'] > 5, np.nan, outlier['score'])
@@ -492,7 +492,7 @@ outlier.dropna(subset = ['sex', 'score']) \ # 결측치 제거
 
 그 후 위처럼 결측치를 제거하고 성별 그룹을 묶어서 평균을 구한다.
 
-#### 극단적인 값
+#### 9.2.2. 극단적인 값
 
 판단 기준은 논리적 판단 (예 : 성인 몸무게는 40~150kg 사이), 통계적 판단(boxplot에서 극단치인 값)이 있다.
 
@@ -518,9 +518,9 @@ mpg['hwy'].isna().sum() # 결측치 빈도확인
 
 위와 같이 상한, 하한을 이용하여 결측치를 제거한 뒤 '2.1. 존재할 수 없는 값'과 마찬가지로 분석하면 된다.
 
-## ChatGPT 4.0
+## 10. ChatGPT 4.0
 
-### Advanced Data Analysis
+### 10.1. Advanced Data Analysis
 
 ChatGPT 4.0 부터 파일 업로드, 다운로드 기능이 있기 때문에 데이터 파일을 업로드 하고 필요한 분석을 요청하면 실행된 코드와 결과물을 보여준다.
 
@@ -532,12 +532,12 @@ ChatGPT 4.0 부터 파일 업로드, 다운로드 기능이 있기 때문에 데
 
 이점 유의해서 AI 사용하도록
 
-### Browsing
+### 10.2. Browsing
 
 ChatGPT 4.0 부터 최신 정보를 검색하여 답변을 줄 수 있다.
 
 
-## Communities
+## 11. Communities
 
 아래는 데이터 분석 네트워킹 커뮤니티이다.
 
