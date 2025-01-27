@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Basic] XSD | 우린 왜 자꾸 코딩하는가</title>
+<meta name="generator" content="Jekyll v4.3.4">
+<meta property="og:title" content="[Basic] XSD">
+<meta name="author" content="Bonazoey">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="XSD (XML Schema Definition)">
+<meta property="og:description" content="XSD (XML Schema Definition)">
+<link rel="canonical" href="/jekyll-theme-yat/basic/2024/04/08/xsd.html">
+<meta property="og:url" content="/jekyll-theme-yat/basic/2024/04/08/xsd.html">
+<meta property="og:site_name" content="우린 왜 자꾸 코딩하는가">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-04-08T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="[Basic] XSD">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bonazoey"},"dateModified":"2024-04-08T00:00:00+00:00","datePublished":"2024-04-08T00:00:00+00:00","description":"XSD (XML Schema Definition)","headline":"[Basic] XSD","mainEntityOfPage":{"@type":"WebPage","@id":"/jekyll-theme-yat/basic/2024/04/08/xsd.html"},"url":"/jekyll-theme-yat/basic/2024/04/08/xsd.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/jekyll-theme-yat/feed.xml" title="우린 왜 자꾸 코딩하는가">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="우린 왜 자꾸 코딩하는가" src="" onerror="this.style.display='none'">
+  우린 왜 자꾸 코딩하는가
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>html .page-banner {
+      height:  36.8vh;
+      min-height: 38vh;
+    }
+    html[data-scroll-status="top"] .page-banner {
+      height: 100vh;
+    }
+  </style>
+<style>
+    html .page-banner .page-banner-inner > *:first-child > *:nth-child(1) {
+      font-size: 4.25em; font-weight: bold
+    }
+  </style>
+<style>
+    html .page-banner .page-banner-inner > *:first-child > *:nth-child(2) {
+      color: gold
+    }
+  </style>
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/basic.gif)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/basic.gif">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">[Basic] XSD</h1>
+  <h2 class="post-subtitle">엑쎄쓰디</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2024-04-08T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 08, 2024
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> Bonazoey</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 17 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#Basic">#Basic</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#XML">#XML</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        // data = { nightShift: undefined, autoToggleAt: 0 };
+        data = { nightShift: true, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        // nightShift: nightShift,
+        // toggleAt: toggleAt.getTime()
+        nightShift: true,
+        toggleAt: 0
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="xsd-xml-schema-definition">XSD (XML Schema Definition)</h2>
+
+<p>XML 스키마 정의(XSD)란 <strong>XML 파일에 몇 개의 element, attribute가 있는지, 몇 개의 child element를 갖는지, data type은 무엇인지, default나 fixed value로 설정할 게 있는지에 대한 정보를 가지고 있는 파일</strong>이다.</p>
+
+<p>이것은 <code class="language-plaintext highlighter-rouge">Well-formed xml</code>이 <code class="language-plaintext highlighter-rouge">valid xml</code>이 되기위한 갖춰야할 조건 중 하나이다. 나머지는 DTD가 있다.</p>
+
+<p>XSD는 DTD의 한계 때문에 사용하게 되었는데,</p>
+
+<ol>
+  <li>
+    <p>네임스페이스를 지원하지 않는 점</p>
+  </li>
+  <li>
+    <p>XML 문법이 아닌 별도의 문법으로 작성해야하는 점</p>
+  </li>
+  <li>
+    <p>제한된 타입만 지원하는 점</p>
+  </li>
+  <li>
+    <p>재사용과 확장이 불가능하다는 점</p>
+  </li>
+</ol>
+
+<p>이러한 단점 때문에 이것들을 해결하고 추가로 정수, 문자열 등 다양한 타입을 지원하는 특징을 가진다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DTD</code>와 달리 XML 문법으로 이루어져 따로 공부를 할 부담이 적고 확장성이 좋고 DTD의 단점들을 보완시킨 검증이다.</p>
+
+<h2 id="문법">문법</h2>
+
+<p>아래는 XSD의 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="c">&lt;!-- 1 --&gt;</span>
+<span class="nt">&lt;xs:schema</span> <span class="na">xmlns:xs=</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span>
+<span class="err">&lt;!--</span> <span class="err">2</span> <span class="err">--</span><span class="nt">&gt;</span>
+  targetNamespace="http://codingsam.com"
+<span class="c">&lt;!-- 3 --&gt;</span>
+  xmlns="http://codingsam.com"
+<span class="c">&lt;!-- 4 --&gt;</span>
+  elementFormDefault="qualified"&gt;
+
+<span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"food"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:complexType&gt;</span>
+    <span class="nt">&lt;xs:sequence&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"type"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"cost"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:sequence&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+
+<span class="nt">&lt;/xs:schema&gt;</span>
+</code></pre></div></div>
+
+<p>위의 예제가 XML을 XSD로 표현한 것이다. XSD의 루트 요소는 <code class="language-plaintext highlighter-rouge">&lt;schema&gt;</code> 요소이다. 이 요소에도 마찬가지로 네임스페이스를 적용시켜야 하며 그 모습은 <code class="language-plaintext highlighter-rouge">&lt;xs:schema&gt;</code>로 나타내어진다.</p>
+
+<p>여기서 식별자에 꼭 URI를 넣지 않고, URL이나 URN을 넣어도 된다. 그 외에 문자열을 넣어도 작동은 되지만 <code class="language-plaintext highlighter-rouge">유일성 확보</code>가 어렵기 때문에 보통 URI를 사용한다.</p>
+
+<p>그렇다고 해당 URI 사이트 내의 어떤 기능을 사용하는 것은 아니고, 그냥 진짜 <code class="language-plaintext highlighter-rouge">구분</code>을 위한 것이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;schema&gt;</code>를 이용한 XML 스키마 선언은 다음과 같은 문법을 따른다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">번호</th>
+      <th style="text-align: center">속성</th>
+      <th style="text-align: left">설명</th>
+      <th style="text-align: left">풀이</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">xmlns:xs</td>
+      <td style="text-align: left">XML 스키마에 사용할 W3C의 XML 스키마 네임스페이스 명시</td>
+      <td style="text-align: left">식별자에 넣은 URI 주소에서 정의한 기능들을 사용할 수 있다</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">targetNamespace</td>
+      <td style="text-align: left">스키마에 정의한 요소나 속성들을 다른 XML 문서에서 식별할 수 있게 네임스페이스 지정</td>
+      <td style="text-align: left">해당 엘리먼트들은 이 식별자에 의해 종속되며 다른 XML 문서에서 사용할 때 충돌하지 않게 방지해준다</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">xmlns</td>
+      <td style="text-align: left">예약되어 있는 키워드로 네임스페이스 정의</td>
+      <td style="text-align: left">다른 XML 문서에서 사용 시 사용할 네임스페이스를 가져온다. 또 여기서는 다른 문서가 아니므로 targetNamespace로 인해 생략해도 가능하나, 기본적으로 명시해주는 것이 원칙이다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">elementFormDefault</td>
+      <td style="text-align: left">해당 스키마를 이용해 선언한 XML 문서의 모든 요소가 네임스페이스를 만족한 다는 것 명시</td>
+      <td style="text-align: left">따라서 사용하는 XML 에서는 접두사 네임스페이스를 사용할 필요가 없다. 하지만 unqualified 시 접두사를 명시하지 않으면 해당 스키마 요소의 기능을 사용하지 않음</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="1-단순-타입simple-type-요소">1. 단순 타입(Simple Type) 요소</h2>
+
+<h3 id="1-1-단순-타입-요소-선언">1-1. 단순 타입 요소 선언</h3>
+
+<p>기본 자료형 요소를 선언하는 문법은 다음과 같다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"요소이름"</span> <span class="na">type=</span><span class="s">"요소타입"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>XSD에서 제공하는 다양한 기본 타입과 파생된 타입을 사용할 수 있다.</p>
+
+<p>아래는 xml 엘리먼트의 XSD의 타입 요소 선언 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;name&gt;</span>홍길동<span class="nt">&lt;/name&gt;</span>
+<span class="nt">&lt;age&gt;</span>20<span class="nt">&lt;/age&gt;</span>
+<span class="nt">&lt;birthtime&gt;</span>15:30:00<span class="nt">&lt;/birthtime&gt;</span>
+</code></pre></div></div>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span> <span class="c">&lt;!-- 문자열 타입 --&gt;</span>
+<span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">type=</span><span class="s">"xs:integer"</span><span class="nt">/&gt;</span> <span class="c">&lt;!-- 정수 타입 --&gt;</span>
+<span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"birthtime"</span> <span class="na">type=</span><span class="s">"xs:time"</span><span class="nt">/&gt;</span> <span class="c">&lt;!-- 시간 타입 --&gt;</span>
+</code></pre></div></div>
+
+<h3 id="1-2-타입-요소의-기본값-선언">1-2. 타입 요소의 기본값 선언</h3>
+
+<p>타입 요소의 <code class="language-plaintext highlighter-rouge">default</code> 속성을 이용하여 기본값을 명시할 수 있다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"grade"</span> <span class="na">type=</span><span class="s">"xs:string"</span> <span class="na">default=</span><span class="s">"B"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>위 처럼 설정하면 요소에 아무 값도 명시되지 않을 시 기본으로 ‘B’가 들어간다.</p>
+
+<h3 id="1-3-타입-요소의-고정값-선언">1-3. 타입 요소의 고정값 선언</h3>
+
+<p>타입 요소의 <code class="language-plaintext highlighter-rouge">fixed</code> 속성을 이용하여 고정값을 명시할 수 있다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"grade"</span> <span class="na">type=</span><span class="s">"xs:string"</span> <span class="na">fixed=</span><span class="s">"D"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>위 처럼 설정하면 요소에 어떤 값이 명시돼도 무조 ‘D’가 들어간다.</p>
+
+<h3 id="1-4-xsd의-속성">1-4. XSD의 속성</h3>
+
+<p>XSD의 단순 타입 요소는 속성을 가질 수 없다. 만약 속성을 갖게 된다면 그 요소는 복합 타입이 된다.</p>
+
+<p>하지만 속성 자체는 언제나 단순 타입으로 선언된다.</p>
+
+<p>종류는 복합 타입요소지만 선언은 단순 타입으로 선언되기 때문에 단순 타입 요소 항목으로 분류류하였다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xs:attribute name="속성명" tyep="속성타입"/&gt;
+</code></pre></div></div>
+
+<h4 id="1-4-1-속성의-필수값-선언">1-4-1. 속성의 필수값 선언</h4>
+
+<p>속성의 기본값과 고정값 선언은 타입요소의 선언과 같으며 추가로 필수 속성을 선언할 수 있다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:attribute</span> <span class="na">name=</span><span class="s">"division"</span> <span class="na">type=</span><span class="s">"xs:string"</span> <span class="na">use=</span><span class="s">"required"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>필수 속성은 <code class="language-plaintext highlighter-rouge">use</code> 뒤에 속성값 <code class="language-plaintext highlighter-rouge">required</code>로 설정하면 요소 선언시 반드시 같이 선어되어야 한다.</p>
+
+<p>반대로 속성값이 <code class="language-plaintext highlighter-rouge">prohibited</code>로 설정되면 <u>해당 속성이 존재하지 않아야</u> 유효한 XML 문서로 간주된다.</p>
+
+<h3 id="1-5-xsd의-제한facets">1-5. XSD의 제한(facets)</h3>
+
+<p>XSD에서는 XML 요소나 속성 선언 시 그 값에 대한 범위를 제한할 수 있다.</p>
+
+<p>단순 타입 요소의 값의 범위를 제한하기 위해 <code class="language-plaintext highlighter-rouge">&lt;restriction&gt;</code> 요소를 사용하고 <code class="language-plaintext highlighter-rouge">base</code> 속성에는 제한 사항을 적용할 타입을 명시한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;restriction</span> <span class="na">base=</span><span class="s">"타입"</span><span class="nt">&gt;</span>
+  타입에 대한 제한 사항
+<span class="nt">&lt;/restriction&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1-5-1-범위-제한">1-5-1. 범위 제한</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">제한</th>
+      <th style="text-align: left">특징</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">maxExclusive</td>
+      <td style="text-align: left">특정 범위 전까지의 상한값 명시</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">maxInclusive</td>
+      <td style="text-align: left">특정 범위 까지의 상한값 명시</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">minExclusive</td>
+      <td style="text-align: left">특정 범위 전까지의 하한값 명시</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">minInclusive</td>
+      <td style="text-align: left">특정 범위 까지의 하한값 명시</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>아래는 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"allowance"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- 단순 타입 요소 선언 --&gt;</span>
+  <span class="nt">&lt;xs:simpleType&gt;</span>
+    <span class="c">&lt;!-- restriction 선언 --&gt;</span>
+    <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">"xs:integer"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- 범위값 선언 --&gt;</span>
+      <span class="nt">&lt;xs:minInclusive</span> <span class="na">value=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:maxInclusive</span> <span class="na">value=</span><span class="s">"100000"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:restriction&gt;</span>
+  <span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<h4 id="1-5-2-선택-제한">1-5-2. 선택 제한</h4>
+
+<p>단순 타입 요소의 값을 특정 값 중에 선택하도록 제한하고자 할 때 <code class="language-plaintext highlighter-rouge">&lt;enumeration&gt;</code>을 사용한다.</p>
+
+<p>이 곳 <code class="language-plaintext highlighter-rouge">value</code> 속성 값에 허용 값들의 리스트를 나열한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"unit"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:simpleType&gt;</span>
+    <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">"xs:string"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">"원"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">"달러"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">"엔"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:restriction&gt;</span>
+  <span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;unit&gt;</code> 요소는 <code class="language-plaintext highlighter-rouge">원, 달러, 엔</code> 중 하나만 대입할 수 있다.</p>
+
+<h4 id="1-5-3-패턴-제한">1-5-3. 패턴 제한</h4>
+
+<p>단순 타입 요소의 텍스트가 특정 패턴을 보이도록 하려면 <code class="language-plaintext highlighter-rouge">&lt;pattern&gt;</code>을 사용한다.</p>
+
+<p>이 곳 <code class="language-plaintext highlighter-rouge">value</code> 속성 값엔 허용되는 정규식이 들어간다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"camel"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:simpleType&gt;</span>
+    <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">"xs:string"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xs:pattern</span> <span class="na">value=</span><span class="s">"([A-Z][a-z])+"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:restriction&gt;</span>
+  <span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;camel&gt;</code> 요소에는 <code class="language-plaintext highlighter-rouge">대문자 + 소문자로 이루어진 한쌍 이상의 텍스트</code>만 대입 가능하다.</p>
+
+<h4 id="1-5-4-공백-제한">1-5-4. 공백 제한</h4>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;whiteSpace&gt;</code>를 사용하면 공백을 어떻게 다룰지 명시할 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">value</code> 값엔 다음과 같은 값들이 들어갈 수 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">속성값</th>
+      <th style="text-align: left">기능</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">preserve</td>
+      <td style="text-align: left">어떠한 공백도 제거하지 않는다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">replace</td>
+      <td style="text-align: left">모든 종류의 공백(line feeds, carriage returns, tabs, spaces)을 띄어쓰기로 모두 대체한다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">collapse</td>
+      <td style="text-align: left">모든 종류의 공백은 띄어쓰기로 모두 대체되고, 문자열 앞뒤의 여백도 제거되며, 많은 수의 띄어쓰기는 하나의 띄어쓰기로 변환된다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>아래는 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"white"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:simpleType&gt;</span>
+    <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">"xs:string"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xs:whiteSpace</span> <span class="na">value=</span><span class="s">"replace"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:restriction&gt;</span>
+  <span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;white&gt;</code> 요소에 포함된 모든 공백은 띄어쓰기로 대체된다.</p>
+
+<h4 id="1-5-5-그-외">1-5-5. 그 외</h4>
+
+<p>그 외에도 다양한 제한이 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">제한</th>
+      <th style="text-align: left">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">length</td>
+      <td style="text-align: left">허용되는 문자열의 길이나 리스트 요소의 수를 명시함. (반드시 0과 같거나 0보다는 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">maxLength</td>
+      <td style="text-align: left">허용되는 문자열의 최대 길이나 리스트 요소의 최댓값을 명시함. (반드시 0과 같거나 0보다는 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">minLength</td>
+      <td style="text-align: left">허용되는 문자열의 최소 길이나 리스트 요소의 최솟값을 명시함. (반드시 0과 같거나 0보다는 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">maxExclusive</td>
+      <td style="text-align: left">허용치의 상한값을 명시함. (모든 값은 반드시 이 값보다 작아야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">maxInclusive</td>
+      <td style="text-align: left">허용치의 상한값을 명시함. (모든 값은 반드시 이 값과 같거나 이 값보다 작아야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">minExclusive</td>
+      <td style="text-align: left">허용치의 하한값을 명시함. (모든 값은 반드시 이 값보다 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">minInclusive</td>
+      <td style="text-align: left">허용치의 하한값을 명시함. (모든 값은 반드시 이 값과 같거나 이 값보다 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">enumeration</td>
+      <td style="text-align: left">허용되는 값의 리스트를 정의함.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pattern</td>
+      <td style="text-align: left">텍스트 데이터의 형식을 정규 표현식을 이용하여 정의함.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">whiteSpace</td>
+      <td style="text-align: left">공백이 어떻게 다루어질지를 명시함. (line feeds, carriage returns, tabs, spaces)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">fractionDigits</td>
+      <td style="text-align: left">허용되는 소수부의 자릿수를 명시함. (반드시 0과 같거나 0보다는 커야 함)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">totalDigits</td>
+      <td style="text-align: left">허용되는 자릿수를 명시함. (반드시 0보다는 커야 함)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="2-복합-타입complex-type-요소">2. 복합 타입(Complex Type) 요소</h2>
+
+<p><code class="language-plaintext highlighter-rouge">복합 타입 요소</code>는 자식 요소나 속성을 포함하는 요소를 의미한다.</p>
+
+<p>XSD의 복합 타입 요소는 다음과 같이 구분한다.</p>
+
+<ol>
+  <li>
+    <p>빈 요소</p>
+  </li>
+  <li>
+    <p>자식 요소만을 포함하는 요소</p>
+  </li>
+  <li>
+    <p>텍스트만을 포함하는 요소</p>
+  </li>
+  <li>
+    <p>자식 요소와 텍스트를 모두 포함하는 요소</p>
+  </li>
+</ol>
+
+<p>위에 있는 모든 복합 타입 요소는 속성을 포함할 수 있다.</p>
+
+<h3 id="2-1-빈-요소-선언">2-1. 빈 요소 선언</h3>
+
+<p>빈 요소는 복합 타입 요소이므로 반드시 하나 이상의 속성을 가져야한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 예제 --&gt;</span>
+<span class="nt">&lt;red</span> <span class="na">redValue=</span><span class="s">"139"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>위의 XML 예제는 아래의 XSD 처럼 선언된다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"red"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- 복합 타입 요소 선언 --&gt;</span>
+  <span class="nt">&lt;xs:complexType&gt;</span>
+    <span class="c">&lt;!-- 복합 요소의 내용 --&gt;</span>
+    <span class="nt">&lt;xs:complexContent&gt;</span>
+      <span class="c">&lt;!-- XSD 제한 --&gt;</span>
+      <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">"xs:integer"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xs:attribute</span> <span class="na">name=</span><span class="s">"redValue"</span> <span class="na">type=</span><span class="s">"xs:positiveInteger"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/xs:restriction&gt;</span>
+    <span class="nt">&lt;/xs:complexContent&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<p>하지만 보통은 <code class="language-plaintext highlighter-rouge">&lt;xs:complexContent&gt;</code>요소와 <code class="language-plaintext highlighter-rouge">&lt;xs:restriction&gt;</code>요소를 생략하고 다음과 같이 정의한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"red"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:complexType&gt;</span>
+    <span class="nt">&lt;xs:attribute</span> <span class="na">name=</span><span class="s">"redValue"</span> <span class="na">type=</span><span class="s">"xs:positiveInteger"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<p>여기서 위에서 언급한 것처럼 속성은 자식 요소나 또다른 속성을 포함할 수 없으므로 언제나 단순 타입으로 나타낸다.</p>
+
+<h3 id="2-2-자식-요소만-포함하는-요소">2-2. 자식 요소만 포함하는 요소</h3>
+
+<p>가장 일반적으로 정의되는 요소이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 예제 --&gt;</span>
+<span class="nt">&lt;physical&gt;</span>
+  <span class="nt">&lt;height&gt;</span>180<span class="nt">&lt;/height&gt;</span>
+  <span class="nt">&lt;waist&gt;</span>32<span class="nt">&lt;/waist&gt;</span>
+<span class="nt">&lt;/physical&gt;</span>
+</code></pre></div></div>
+
+<p>아래는 XSD의 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"physical"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:complexType&gt;</span>
+    <span class="c">&lt;!-- sequence 지시자는 자식 요소가 순서대로 나타날 수 있다는 것을 명시 --&gt;</span>
+    <span class="nt">&lt;xs:sequence&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"height"</span> <span class="na">type=</span><span class="s">"xs:integer"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"waist"</span> <span class="na">type=</span><span class="s">"xs:integer"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:sequence&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2-3-텍스트만-포함하는-요소">2-3. 텍스트만 포함하는 요소</h3>
+
+<p>XSD에서 텍스트만 포함하는 요소는 `<simplecontent> 요소를 사용하여 선언한다.</simplecontent></p>
+
+<p>이 안에는 <code class="language-plaintext highlighter-rouge">&lt;extention&gt;</code> 요소나 <code class="language-plaintext highlighter-rouge">&lt;restriction&gt;</code> 요소 중 하나가 반드시 선언되어야 한다.</p>
+
+<p>그래야 기초가 되는 단순 타입 요소를 확장하거나 제한할 수 있기 때문이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 예제 ---&gt;</span>
+<span class="nt">&lt;currency</span> <span class="na">country=</span><span class="s">"kor"</span><span class="nt">&gt;</span>10000<span class="nt">&lt;/currency&gt;</span>
+</code></pre></div></div>
+
+<p>아래는 XSD 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"currency"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:complexType&gt;</span>
+    <span class="c">&lt;!-- simpleContent 선언 --&gt;</span>
+    <span class="nt">&lt;xs:simpleContent&gt;</span>
+      <span class="nt">&lt;xs:extension</span> <span class="na">base=</span><span class="s">"xs:integer"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- 속성은 단순 타입 요소로 나타내기 때문에 가장 하위에 선언된다. --&gt;</span>
+        <span class="nt">&lt;xs:attribute</span> <span class="na">name=</span><span class="s">"country"</span> <span class="na">type=</span><span class="s">"xs:string"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/xs:extension&gt;</span>
+    <span class="nt">&lt;/xs:simpleContent&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2-4-자식-요소와-텍스트를-모두-포한하는-요소">2-4. 자식 요소와 텍스트를 모두 포한하는 요소</h3>
+
+<p>자식 요소들 사이에서 나오는 텍스트를 표현하기 위해서는 반드시 `<complextype>의 mixed 속성값을 true로 설정해야 한다.</complextype></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 예제 --&gt;</span>
+<span class="nt">&lt;student&gt;</span>
+  학생의 이름은 <span class="nt">&lt;name&gt;</span>홍길동<span class="nt">&lt;/name&gt;</span>이고,
+  성별은 <span class="nt">&lt;gender&gt;</span>남자<span class="nt">&lt;/gender&gt;</span>이며,
+  나이는 <span class="nt">&lt;age&gt;</span>15<span class="nt">&lt;/age&gt;</span>살 입니다.
+<span class="nt">&lt;/student&gt;</span>
+</code></pre></div></div>
+
+<p>아래는 XSD 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"student"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- mix="true" --&gt;</span>
+  <span class="nt">&lt;xs:complexType</span> <span class="na">mixed=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- 자식요소 지시자 --&gt;</span>
+    <span class="nt">&lt;xs:sequence&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"gender"</span> <span class="na">type=</span><span class="s">"xs:string"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">type=</span><span class="s">"xs:positiveInteger"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:sequence&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="nt">&lt;/xs:element&gt;</span>
+</code></pre></div></div>
+
+<h3 id="2-5-임의의-요소-및-속성-사용">2-5. 임의의 요소 및 속성 사용</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;any&gt;</code> 요소는 해당 XSD 파일에서 선언되지 않은 요소를 사용해 XML 문서를 확장할 수 있게 해준다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;anyAttribute&gt;</code> 요소는 해당 XSD 파일에서 선언되지 않은 속성을 사용해 XML 문서를 확장할 수 있게 해준다.</p>
+
+<p>이로써 XML 문서의 확장성을 더욱 좋게 만들어준다.</p>
+
+<p>아래는 <code class="language-plaintext highlighter-rouge">student.xsd</code>에 세 번째 요소로 외부 xsd인 <code class="language-plaintext highlighter-rouge">address.xsd</code>가 나오는 예제이다.</p>
+
+<pre><code class="language-xsd">&lt;!-- student.xsd --&gt;
+
+&lt;xs:element name="student"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="gender" type="xs:string"/&gt;
+      &lt;!-- 여기서 3번째에 어떤 요소가 와도 되고, 오지 않아도 됨 --&gt;
+      &lt;!-- 'address.xsd가 삽입될 자리 --&gt;
+      &lt;xs:any minOccurs="0"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</code></pre>
+
+<pre><code class="language-xsd">&lt;!-- address.xsd --&gt;
+
+&lt;xs:element name="address"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="zipcode" type="xs:integer"/&gt;
+      &lt;xs:element name="si" type="xs:string"/&gt;
+      &lt;xs:element name="gu" type="xs:string"/&gt;
+      &lt;xs:element name="street" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</code></pre>
+
+<p>두 XSD가 위와 같을 때 만들어지 XML 문서의 예제이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;student&gt;</span>
+  <span class="nt">&lt;name&gt;</span>길동<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;gender&gt;</span>남자<span class="nt">&lt;/gender&gt;</span>
+  <span class="c">&lt;!-- 세 번째 요소에 `address.xsd 추가 --&gt;</span>
+  <span class="nt">&lt;address&gt;</span>
+    <span class="nt">&lt;zipcode&gt;</span>12345<span class="nt">&lt;/zipcode&gt;</span>
+    <span class="nt">&lt;si&gt;</span>서울시<span class="nt">&lt;/si&gt;</span>
+    <span class="nt">&lt;gu&gt;</span>강남구<span class="nt">&lt;/gu&gt;</span>
+    <span class="nt">&lt;street&gt;</span>테헤란로<span class="nt">&lt;/street&gt;</span>
+  <span class="nt">&lt;/address&gt;</span>
+<span class="nt">&lt;/student&gt;</span>
+</code></pre></div></div>
+
+<h2 id="3-xsd-지시자indicator">3. XSD 지시자(indicator)</h2>
+
+<p>XSD 지시자를 이용하면 XML 문서 내에 요소들이 구성되는 방식을 설정할 수 있다.</p>
+
+<p>사용되는 지시자는 다음과 같다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">구분</th>
+      <th style="text-align: center">종류</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">순서 지시자</td>
+      <td style="text-align: center">sequence, all, choice</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">출현 빈도 지시자</td>
+      <td style="text-align: center">maxOccurs, minOccurs</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">그룹 지시자</td>
+      <td style="text-align: center">group, attributeGroup</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="3-1-순서-지시자">3-1. 순서 지시자</h3>
+
+<p>요소들이 나타내는 순서를 정의할 때 사용한다.</p>
+
+<ul>
+  <li>
+    <p>sequence</p>
+  </li>
+  <li>
+    <p>all</p>
+  </li>
+  <li>
+    <p>choice</p>
+  </li>
+</ul>
+
+<h4 id="-sequence">● sequence</h4>
+
+<p>자식 요소가 명시된 순서대로만 나타낼 수 있다는 것을 명시.</p>
+
+<pre><code class="language-xsd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+&lt;xs:element name="physical"&gt;
+  &lt;xs:complexType&gt;
+    &lt;!-- sequence 지시자 사용 --&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="height" type="xs:integer"/&gt;
+      &lt;xs:element name="waist" type="xs:integer"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;heigth&gt;</code>요소와 <code class="language-plaintext highlighter-rouge">&lt;waist&gt;</code>요소는 무조건 이 순서로 나와야 한다.</p>
+
+<h4 id="-all">● all</h4>
+
+<p>자식 요소가 어떤 순서로 나오든 단 한 번씩만 나올 수 있다는 것 명시</p>
+
+<pre><code class="language-xsd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+&lt;xs:element name="physical"&gt;
+  &lt;xs:complexType&gt;
+    &lt;!-- all 지시자 선언 --&gt;
+    &lt;xs:all&gt;
+      &lt;xs:element name="height" type="xs:integer"/&gt;
+      &lt;xs:element name="waist" type="xs:integer"/&gt;
+    &lt;/xs:all&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;heigth&gt;</code>요소와 <code class="language-plaintext highlighter-rouge">&lt;waist&gt;</code>요소는 순서에 상관 없이 단 한 번만 나올 수 있다.</p>
+
+<h4 id="-choice">● choice</h4>
+
+<p>복합 타입 요소 내 자식요소의 선택 집합을 명시한다.</p>
+
+<p>이렇게 선언된 복합 타입 요소는 단 하나의 자식만 가질 수 있다.</p>
+
+<p>선택 집합은 다른 선택 집합이나 다른 시퀀스 안에 포함될 수 있다.</p>
+
+<pre><code class="language-xsd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+&lt;xs:element name="physical"&gt;
+  &lt;xs:complexType&gt;
+    &lt;!-- choice 선언 --&gt;
+    &lt;xs:choice&gt;
+      &lt;xs:element name="height" type="xs:integer"/&gt;
+      &lt;xs:element name="waist" type="xs:integer"/&gt;
+    &lt;/xs:choice&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+
+<p>여기서 <code class="language-plaintext highlighter-rouge">&lt;heigth&gt;</code>요소와 <code class="language-plaintext highlighter-rouge">&lt;waist&gt;</code>요소 중 하나만 자식 요소로 가질 수 있다.</p>
+
+<h3 id="3-2-출현-빈도-지시자">3-2. 출현 빈도 지시자</h3>
+
+<p>출현 빈도 지시자는 해당 요소를 자식 요소가 얼마나 가질 수 있는지 정의한다.</p>
+
+<p>모든 순서 지시자, 그룹 지시자 내에 출현 빈도 지시자의 기본값은 1이다.</p>
+
+<ul>
+  <li>
+    <p>maxOccurs</p>
+  </li>
+  <li>
+    <p>minOccurs</p>
+  </li>
+</ul>
+
+<h4 id="-maxoccurs--minoccurs">● maxOccurs &amp; minOccurs</h4>
+
+<p>자식 요소의 최댓값 &amp; 최솟값을 명시한다.</p>
+
+<pre><code class="language-xsd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+ 
+&lt;xs:element name="customer"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="age" type="xs:integer"/&gt;
+      &lt;!-- 'phoneNumber' 자식 요소의 최댓값 3로 명시, 최솟값 2로 명시, 2~3번 나올 수 있다. --&gt;
+      &lt;xs:element name="phoneNumber" type="xs:integer" minOccurs="2" maxOccurs="3"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+
+<p>아래는 위의 xsd에 적합한 XML 문서이다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+
+<span class="nt">&lt;customer&gt;</span>
+  <span class="nt">&lt;name&gt;</span>홍길동<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;age&gt;</span>15<span class="nt">&lt;/age&gt;</span>
+  <span class="c">&lt;!-- minOccurs가 2 이므로 phoneNumber 요소가 최소 2개 이상&gt;
+  &lt;phoneNumber&gt;0212345678&lt;/phoneNumber&gt;
+  &lt;phoneNumber&gt;01023456789&lt;/phoneNumber&gt;
+  &lt;!-- maxOccurs가 3 이므로 phoneNumber 요소가 하나 더 올 수 있음&gt;
+&lt;/customer&gt;
+</span></code></pre></div></div>
+
+<h4 id="-출현-빈도-제한">● 출현 빈도 제한</h4>
+
+<p>출현 빈도 지시자를 지정하지 않으면 기본값이 1이지만 해당 요소의 자식 요소에 제한을 두고싶지 않다면 출현 빈도 지시자 값을 <code class="language-plaintext highlighter-rouge">unbounded</code>로 설정하면 된다.</p>
+
+<pre><code class="language-xsd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+&lt;xs:element name="customer"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="age" type="xs:integer"/&gt;
+      &lt;!-- 최소 기본값 1개부터 최댓값은 무한으로 가질 수 있다 --&gt;
+      &lt;xs:element name="phoneNumber" type="xs:integer" maxOccurs="unbounded"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+
+<h3 id="3-3-그룹-지시자">3-3. 그룹 지시자</h3>
+
+<p>그룹 지시자는 요소들 간의 연관성을 명시할 때 사용한다.</p>
+
+<ul>
+  <li>
+    <p>group</p>
+  </li>
+  <li>
+    <p>attributeGroup</p>
+    <h4 id="-group">● group</h4>
+  </li>
+</ul>
+
+<p>연관 요소들을 하나의 그룹으로 묶어준다.</p>
+
+<p>순서 지시자는 반드시 <code class="language-plaintext highlighter-rouge">group 지시자</code> 내부에 명시되어야 한다.</p>
+
+<p>정의된 그룹은 <code class="language-plaintext highlighter-rouge">ref 속성에 해당 그룹의 </code>name` 속성값을 사용하면 참조할 수 있다.</p>
+
+<pre><code class="language-xsd">&lt;!-- 그룹 선언 --&gt;
+&lt;xs:group name="bodyInfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="height" type="xs:integer"/&gt;
+    &lt;xs:element name="waist" type="xs:integer"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:group&gt;
+
+&lt;!-- 선언한 그룹 참조--&gt;
+&lt;xs:element name="physical"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;!-- 참조 부분 --&gt;
+      &lt;xs:group ref="bodyInfo"/&gt;
+      &lt;xs:element name="footsize" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</code></pre>
+
+<h4 id="-attributegroup">● attributeGroup</h4>
+
+<p>연관된 속성들을 하나의 속성 그룹으로 묶어준다.</p>
+
+<p>마찬가지로 <code class="language-plaintext highlighter-rouge">ref</code> 속성에 해당 그룹의 <code class="language-plaintext highlighter-rouge">name</code> 속성값을 사용하여 참조 가능하다.</p>
+
+<pre><code class="language-xsd">&lt;!-- 속성 그룹 선언 --&gt;
+&lt;xs:attributeGroup name="personInfo"&gt;
+  &lt;xs:attribute name="gender" type="xs:string"/&gt;
+  &lt;xs:attribute name="age" type="xs:string"/&gt;
+&lt;/xs:attributeGroup&gt;
+
+&lt;!-- 선언된 속성 그룹 참조 --&gt;
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;!-- 참조 부분 --&gt;
+    &lt;xs:attributeGroup ref="personInfo"/&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</code></pre>
+
+<h2 id="end">End..</h2>
+
+<p>이렇게 XSD에 대해 전체적으로 쭈욱 공부해보았다.</p>
+
+<p>처음에는 개념 자체가 잘 받아드려지지 않았지만 지금은 어느정도 정리가 된 느낌이다.</p>
+
+<p>XSD는 Well-formed XML 문서가 넘어 왔을 시 원하는 내용의 XML 문서인지 검증하는 파일이다.</p>
+
+<p>XSD 파일은 XML 문서를 사용하는 곳에서 제공되는 하나의 양식과 비슷하며 이것에 맞추어 XML 문서는 해석되고 데이터가 변환되고 이용되는 것 같다.</p>
+
+<p>DTD도 마찬가지지만 더 직관적이고 활용성도 높은 것 같다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/basic/2024/04/05/xml.html" title="[Basic] XML">[Basic] XML</a><a class="next" href="/jekyll-theme-yat/basic/2024/04/08/dtd.html" title="[Basic] DTD">[Basic] DTD</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/basic/2024/04/08/dtd.html" title="[Basic] DTD">
+            [Basic] DTD<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/basic/2024/04/09/xpath.html" title="[Basic] XPath">
+            [Basic] XPath<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/java/2024/04/09/xml-to-java.html" title="[Java] XML to Java (Parsing)">
+            [Java] XML to Java (Parsing)<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/rpa/2024/03/21/StudioX.html" title="[UIpath] Studio &amp; StudioX">
+            [UIpath] Studio &amp; StudioX<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2024-2025 {Bonazoey}</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

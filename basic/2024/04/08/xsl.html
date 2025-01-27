@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[Basic] XSLT | 우린 왜 자꾸 코딩하는가</title>
+<meta name="generator" content="Jekyll v4.3.4">
+<meta property="og:title" content="[Basic] XSLT">
+<meta name="author" content="Bonazoey">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="XSLT">
+<meta property="og:description" content="XSLT">
+<link rel="canonical" href="/jekyll-theme-yat/basic/2024/04/08/xsl.html">
+<meta property="og:url" content="/jekyll-theme-yat/basic/2024/04/08/xsl.html">
+<meta property="og:site_name" content="우린 왜 자꾸 코딩하는가">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-04-08T02:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="[Basic] XSLT">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Bonazoey"},"dateModified":"2024-04-08T02:00:00+00:00","datePublished":"2024-04-08T02:00:00+00:00","description":"XSLT","headline":"[Basic] XSLT","mainEntityOfPage":{"@type":"WebPage","@id":"/jekyll-theme-yat/basic/2024/04/08/xsl.html"},"url":"/jekyll-theme-yat/basic/2024/04/08/xsl.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="/jekyll-theme-yat/feed.xml" title="우린 왜 자꾸 코딩하는가">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="우린 왜 자꾸 코딩하는가" src="" onerror="this.style.display='none'">
+  우린 왜 자꾸 코딩하는가
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>html .page-banner {
+      height:  36.8vh;
+      min-height: 38vh;
+    }
+    html[data-scroll-status="top"] .page-banner {
+      height: 100vh;
+    }
+  </style>
+<style>
+    html .page-banner .page-banner-inner > *:first-child > *:nth-child(1) {
+      font-size: 4.25em; font-weight: bold
+    }
+  </style>
+<style>
+    html .page-banner .page-banner-inner > *:first-child > *:nth-child(2) {
+      color: gold
+    }
+  </style>
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/basic.gif)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/basic.gif">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">[Basic] XSLT</h1>
+  <h2 class="post-subtitle">엑쎄쎌티</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2024-04-08T02:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 08, 2024
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> Bonazoey</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 7 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#Basic">#Basic</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#XML">#XML</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        // data = { nightShift: undefined, autoToggleAt: 0 };
+        data = { nightShift: true, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        // nightShift: nightShift,
+        // toggleAt: toggleAt.getTime()
+        nightShift: true,
+        toggleAt: 0
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="xslt">XSLT</h2>
+
+<p><code class="language-plaintext highlighter-rouge">XSLT</code>는 XML 문서를 XHTML 문서나 다른 XML 타입의 문서로 변환하기 위해 사용한다.</p>
+
+<p>W3C 표준 권고안으로, XSL에서 가장 중요한 언어다.</p>
+
+<p>변환과정에서 XSLT는 <code class="language-plaintext highlighter-rouge">XPath</code>를 이용해 XML 문서에 필요한 정보를 찾는 역할을 한다.</p>
+
+<p>현재 대부분 주요 웹 브라우저는 XSLT와 XPath를 지원하고 있다.</p>
+
+<h2 id="1-transformation-process">1. Transformation Process</h2>
+
+<p>XSLT의 변환 과정은 크게 두가지로 이루어진다.</p>
+
+<ol>
+  <li>
+    <p>변환(Transformation) : XML 문서를 다른 구조의 XMl 문서로 변환하는 과정</p>
+  </li>
+  <li>
+    <p>서식 설정(Formatting) : XML 문서를 특정 데이터 구조의 비 XML 문서로 변환하는 과정</p>
+  </li>
+</ol>
+
+<p><img src="https://github.com/bonazoey/bonazoey.github.io/assets/142956374/8c902bbd-f70b-449e-a549-77755e03f0db" alt="image"></p>
+
+<h3 id="1-1-xslt-변환">1-1. XSLT 변환</h3>
+
+<p>변환될 데이터를 가지고 있는 XML 문서와 변환에 대한 규칙을 가지고 있는 XSLT 문서만 있으면 변환을 진행할 수 있다.</p>
+
+<p>아래는 XML 문서를 well-formed HTML 문서로 바꾸는 과정이다.</p>
+
+<details>
+  
+  <summary><a>예제 코드 보기</a></summary>
+
+  <div>
+
+    <div class="language-xml highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 문서 --&gt;</span>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+
+<span class="nt">&lt;programming_languages&gt;</span>
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name&gt;</span>HTML<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>web<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>W3C<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"working draft"</span><span class="nt">&gt;</span>5.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"1"</span><span class="nt">&gt;</span>high<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+
+  ...
+
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name</span> <span class="na">korean=</span><span class="s">"파이썬"</span><span class="nt">&gt;</span>Python<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>application<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>Python<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>3.52<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"4"</span><span class="nt">&gt;</span>middle<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+<span class="nt">&lt;/programming_languages&gt;</span>
+</code></pre></div>    </div>
+
+  </div>
+</details>
+
+<h4 id="1단계--xslt-문서-작성">1단계 : XSLT 문서 작성</h4>
+<details>
+  
+  <summary><a>코드 보기</a></summary>
+
+  <div>
+
+    <pre><code class="language-xsl">&lt;!-- XSLT 문서 작성 --&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:output method="html"/&gt;
+  &lt;xsl:template match="/"&gt;
+
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2 style="text-align:center"&gt;프로그래밍 언어&lt;/h2&gt;
+        &lt;table border="1" style="width: 50%; margin: auto"&gt;
+          &lt;tr&gt;
+            &lt;th&gt;이름&lt;/th&gt;
+            &lt;th&gt;종류&lt;/th&gt;
+            &lt;th&gt;개발사&lt;/th&gt;
+            &lt;th&gt;버전&lt;/th&gt;
+            &lt;th&gt;중요도&lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;xsl:for-each select="programming_languages/language"&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;xsl:value-of select="name"/&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;xsl:value-of select="category"/&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;xsl:value-of select="developer"/&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;xsl:value-of select="version"/&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;xsl:value-of select="priority"/&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/xsl:for-each&gt;
+        &lt;/table&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+  </div>
+</details>
+
+<h4 id="2단계--xml-문서에-xslt-문서를-연결">2단계 : XML 문서에 XSLT 문서를 연결</h4>
+<details>
+  
+  <summary><a>코드 보기</a></summary>
+
+  <div>
+
+    <div class="language-xml highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="c">&lt;!-- XML 문서에 XSLT 문서를 연결해주는 코드 작성 --&gt;</span>
+<span class="cp">&lt;?xml-stylesheet type="text/xsl" href="xml_xslt_01.xsl"?&gt;</span>
+
+<span class="nt">&lt;programming_languages&gt;</span>
+    <span class="nt">&lt;language&gt;</span>
+        <span class="nt">&lt;name&gt;</span>HTML<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;category&gt;</span>web<span class="nt">&lt;/category&gt;</span>
+        <span class="nt">&lt;developer&gt;</span>W3C<span class="nt">&lt;/developer&gt;</span>
+        <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"working draft"</span><span class="nt">&gt;</span>5.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"1"</span><span class="nt">&gt;</span>high<span class="nt">&lt;/priority&gt;</span>
+    <span class="nt">&lt;/language&gt;</span>
+    <span class="nt">&lt;language&gt;</span>
+        <span class="nt">&lt;name&gt;</span>CSS<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;category&gt;</span>web<span class="nt">&lt;/category&gt;</span>
+        <span class="nt">&lt;developer&gt;</span>W3C<span class="nt">&lt;/developer&gt;</span>
+        <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>3.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"3"</span><span class="nt">&gt;</span>middle<span class="nt">&lt;/priority&gt;</span>
+    <span class="nt">&lt;/language&gt;</span>
+    <span class="nt">&lt;language&gt;</span>
+        <span class="nt">&lt;name</span> <span class="na">korean=</span><span class="s">"자바"</span><span class="nt">&gt;</span>Java<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;category&gt;</span>application<span class="nt">&lt;/category&gt;</span>
+        <span class="nt">&lt;developer&gt;</span>Oracle<span class="nt">&lt;/developer&gt;</span>
+        <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>8.91<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"2"</span><span class="nt">&gt;</span>high<span class="nt">&lt;/priority&gt;</span>
+    <span class="nt">&lt;/language&gt;</span>
+    <span class="nt">&lt;language&gt;</span>
+        <span class="nt">&lt;name</span> <span class="na">korean=</span><span class="s">"파이썬"</span><span class="nt">&gt;</span>Python<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;category&gt;</span>application<span class="nt">&lt;/category&gt;</span>
+        <span class="nt">&lt;developer&gt;</span>Python<span class="nt">&lt;/developer&gt;</span>
+        <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>3.52<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"4"</span><span class="nt">&gt;</span>middle<span class="nt">&lt;/priority&gt;</span>
+    <span class="nt">&lt;/language&gt;</span>
+<span class="nt">&lt;/programming_languages&gt;</span>
+</code></pre></div>    </div>
+
+  </div>
+</details>
+
+<h4 id="3단계--웹-브라우저에서-xml-문서-확인">3단계 : 웹 브라우저에서 XML 문서 확인</h4>
+<details>
+  
+  <summary><a>결과 보기</a></summary>
+
+  <div>
+
+    <p><img src="https://github.com/bonazoey/bonazoey.github.io/assets/142956374/6ca6ac61-dd1e-4995-b756-2c93db1938df" alt="image"></p>
+
+    <p>확인 시 XML 문서가 HTML로 변환되어 나온 것을 볼 수 있다.</p>
+
+  </div>
+</details>
+
+<h3 id="2-template">2. Template</h3>
+
+<h4 id="2-1-루트요소">2-1. 루트요소</h4>
+
+<p>XSLT 문서의 루트 요소는 <code class="language-plaintext highlighter-rouge">&lt;xsl:stylesheet&gt;</code>나 ` <xsl:transform>`요소로 표현될 수 있다.</xsl:transform></p>
+
+<p>또한, 루트 요소의 시작 태그에는 W3C XSLT 네임스페이스를 반드시 같이 명시해야 한다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="c">&lt;!-- 'xsl:stylesheet'로 루트 요소 명시, `xmlns:xsl="..."` 네임스페이스 명시 --&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">version=</span><span class="s">"2.0"</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span><span class="nt">&gt;</span>
+...
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+
+<span class="c">&lt;!-- 또는 --&gt;</span>
+
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;xsl:transform</span> <span class="na">version=</span><span class="s">"2.0"</span> <span class="na">xmlns:xsl=</span><span class="s">"http://www.w3.org/1999/XSL/Transform"</span><span class="nt">&gt;</span>
+...
+<span class="nt">&lt;/xsl:transform&gt;</span>
+</code></pre></div></div>
+
+<p>둘 다 같은 동작을 수행하기 때문에 어느 걸 사용해도 좋다.</p>
+
+<h4 id="2-2-템플릿-작성">2-2. 템플릿 작성</h4>
+
+<p>XSLT 프로세서가 XSLT 문서에서 가장 먼저 찾는 요소는 템플릿 요소이다.</p>
+
+<p>템플릿은 <strong>특정 노드가 일치할 때 해당 노드에 적용할 규칙들을 포함</strong>한다.</p>
+
+<p>이런 템플릿은 루트 노드에 포함된 컨텐츠를 어떻게 처리하고 변환할 지 나타낸다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:template&gt;</code> 요소로 표현할 수 있으며 <code class="language-plaintext highlighter-rouge">match</code> 속성에는 속성값으로 연결할 XML 요소 범위를 나타내는 <code class="language-plaintext highlighter-rouge">XPath</code> 표현식을 명시한다.</p>
+
+<pre><code class="language-xsl">&lt;xsl:template match="/"&gt;
+</code></pre>
+
+<h4 id="2-3-템플릿-적용">2-3. 템플릿 적용</h4>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:apply-template&gt;</code>요소는 특정 노드나 특정 노드의 자식 노드에 템플릿을 적용할 때 사용한다.</p>
+
+<p>아래는 <code class="language-plaintext highlighter-rouge">&lt;name&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;category&gt;</code> 요소에만 별도 템플릿을 적용하는 예제이다.</p>
+
+<details>
+  
+  <summary><a>XSL 파일 코드</a></summary>
+
+  <div>
+
+    <pre><code class="language-xsl">&lt;!-- XSL 파일 --&gt;
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:output method="html"/&gt;
+
+  &lt;xsl:template match="/"&gt;
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2 style="text-align:center"&gt;프로그래밍 언어&lt;/h2&gt;
+        &lt;xsl:apply-templates/&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="language"&gt;
+    &lt;p&gt;
+      &lt;xsl:apply-templates select="name"/&gt;
+      &lt;xsl:apply-templates select="category"/&gt;
+    &lt;/p&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="name"&gt;
+    언어 이름 : &lt;strong&gt;
+    &lt;xsl:value-of select="."/&gt;&lt;/strong&gt;&lt;br/&gt;
+  &lt;/xsl:template&gt;
+
+  &lt;xsl:template match="category"&gt;
+    카테고리 : &lt;span style="color: green"&gt;
+    &lt;xsl:value-of select="."/&gt;&lt;/span&gt;&lt;br/&gt;
+  &lt;/xsl:template&gt;
+ 
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+
+  </div>
+</details>
+
+<details>
+  
+  <summary><a>XML 파일 코드</a></summary>
+
+  <div>
+
+    <div class="language-xml highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- XML 파일 --&gt;</span>
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;?xml-stylesheet type="text/xsl" href="xml_xslt_02.xsl"?&gt;</span>
+
+<span class="nt">&lt;programming_languages&gt;</span>
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name&gt;</span>HTML<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>web<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>W3C<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"working draft"</span><span class="nt">&gt;</span>5.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"1"</span><span class="nt">&gt;</span>high<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name&gt;</span>CSS<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>web<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>W3C<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>3.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"3"</span><span class="nt">&gt;</span>middle<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name</span> <span class="na">korean=</span><span class="s">"자바"</span><span class="nt">&gt;</span>Java<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>application<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>Oracle<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>8.91<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"2"</span><span class="nt">&gt;</span>high<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+
+  <span class="nt">&lt;language&gt;</span>
+    <span class="nt">&lt;name</span> <span class="na">korean=</span><span class="s">"파이썬"</span><span class="nt">&gt;</span>Python<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;category&gt;</span>application<span class="nt">&lt;/category&gt;</span>
+    <span class="nt">&lt;developer&gt;</span>Python<span class="nt">&lt;/developer&gt;</span>
+    <span class="nt">&lt;version</span> <span class="na">status=</span><span class="s">"stable"</span><span class="nt">&gt;</span>3.52<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">rating=</span><span class="s">"4"</span><span class="nt">&gt;</span>middle<span class="nt">&lt;/priority&gt;</span>
+  <span class="nt">&lt;/language&gt;</span>
+
+<span class="nt">&lt;/programming_languages&gt;</span>
+</code></pre></div>    </div>
+
+  </div>
+</details>
+
+<details>
+  
+  <summary><a>결과</a></summary>
+
+  <div>
+
+    <p><img src="https://github.com/bonazoey/bonazoey.github.io/assets/142956374/b6ead134-06e0-4574-827e-85f14b179ad8" alt="image"></p>
+
+  </div>
+</details>
+
+<h2 id="3-노드의-처리">3. 노드의 처리</h2>
+
+<h3 id="3-1-반복-처리">3-1. 반복 처리</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:for-each&gt;</code> 요소는 선택된 각 노드에 반복해서 템플릿을 적용시켜준다.</p>
+
+<p>이 요소는 <code class="language-plaintext highlighter-rouge">select</code> 속성으로 전달받은 XPath 표현식에 따라 선택된 노드의 개수만큼 반복해서 템플릿을 적용한다.</p>
+
+<p>다음 예제는 <programming_languages>요소의 자식 요소인 <language>요소의 개수만큼 반복해서 템플릿을 적용하는 예제이다.</language></programming_languages></p>
+
+<pre><code class="language-xsl">&lt;xsl:for-each select="programming_languages/language"&gt;
+...
+&lt;/xsl:for-each&gt;
+</code></pre>
+
+<h3 id="3-2-값-출력">3-2. 값 출력</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:value-of&gt;</code> 요소는 선택된 노드에서 데이터를 추출한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">select</code> 속성으로 전달받은 XPath 표현식에 따라 선택된 노드의 값을 텍스트로 추출하여 해당 위치에 삽입한다.</p>
+
+<p>아래는 <name>요소의 값을 추출하여 텍스트로 삽입하는 예제이다.</name></p>
+
+<pre><code class="language-xsl">&lt;xsl:value-of select="name"/&gt;
+</code></pre>
+
+<h3 id="3-3-정렬">3-3. 정렬</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:sort&gt;</code>요소는 노드들의 정렬 기준을 명시할 때 사용한다.</p>
+
+<p>아래는 문법 예시이다.</p>
+
+<pre><code class="language-xsl">&lt;xsl:sort
+  select = string-expression
+  lang = { nmtoken }
+  data-type = { \"text\" | \"number\" | qname-but-not-ncname }
+  order = { \"ascending\" | \"descending\" }
+  case-order = { \"upper-first\" | \"lower-first\" } /&gt;
+</code></pre>
+<p>| 속성 | 속성값 |
+| :—: | :— |
+| select | 노드를 정렬하기 위해 기준이 되는 키(key)를 명시합니다. |
+| lang | 정렬 순서를 결정하는데 사용되는 영문자를 명시합니다. |
+| data-type | 텍스트의 타입을 명시합니다. |
+| order | 정렬 순서를 명시하며, 기본 설정값은 오름차순(ascending)입니다. |
+| case-order | 대소문자에 의한 문자열의 정렬 순서를 명시하며, 기본 설정값은 대문자가 먼저(upper-first)입니다. |</p>
+
+<h3 id="3-4-조건부-처리">3-4. 조건부 처리</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:if&gt;</code>요소는 노드의 값이 특정 조건에 해당할 때만 동작한다.</p>
+
+<p>test 속성으로 전달받은 표현식이 참인 경우에만 실행한다.</p>
+
+<p>아래는 예제이다.</p>
+
+<pre><code class="language-xsl">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:output method="html"/&gt;
+  &lt;xsl:template match="/"&gt;
+
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2 style="text-align:center"&gt;버전이 5.0 이상인 언어&lt;/h2&gt;
+        &lt;xsl:for-each select="programming_languages/language"&gt;
+          &lt;xsl:if test="version &amp;gt; 5"&gt;
+            &lt;xsl:value-of select="name"/&gt; : ver.
+            &lt;xsl:value-of select="version"/&gt;&lt;br/&gt;
+          &lt;/xsl:if&gt;
+        &lt;/xsl:for-each&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+
+<p>버전이 5 이상인 언어만 출력한다.</p>
+
+<h3 id="3-5-다중-조건부-처리">3-5. 다중 조건부 처리</h3>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:choose&gt;</code>요소는 <code class="language-plaintext highlighter-rouge">&lt;xsl:when&gt;</code>과 <code class="language-plaintext highlighter-rouge">&lt;xsl:otherwise&gt;</code>요소와 함께 다중 조건문을 작성할 때 사용한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;xsl:when&gt;</code>요소는 <code class="language-plaintext highlighter-rouge">test</code> 속성으로 전달받은 표현식이 참인 경우에만 실행한다.</p>
+
+<p>거짓인 경우에는 실행하지 않으며 <code class="language-plaintext highlighter-rouge">&lt;xsl:otherwise&gt;</code>요소가 실행된다.</p>
+
+<p>아래는 예제이다.</p>
+
+<pre><code class="language-xsl">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+  &lt;xsl:output method="html"/&gt;
+  &lt;xsl:template match="/"&gt;
+
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2 style="text-align:center"&gt;노드의 다중 조건부 처리&lt;/h2&gt;
+        &lt;xsl:for-each select="programming_languages/language"&gt;
+          &lt;xsl:choose&gt;
+            &lt;xsl:when test="priority[@rating &amp;gt; 2]"&gt;
+              &lt;xsl:value-of select="name"/&gt; : 나중에 꼭 공부해요!&lt;br/&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+              &lt;xsl:value-of select="name"/&gt; : 우선은 이 과목부터 공부하죠!&lt;br/&gt;
+            &lt;/xsl:otherwise&gt;
+          &lt;/xsl:choose&gt;
+        &lt;/xsl:for-each&gt;
+      &lt;/body&gt;
+    &lt;/html&gt; 
+
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;priority&gt;</code>요소의 rating 속성값이 2 이상 경우와, 그렇지 않은 경우에 다른 텍스트를 출력한다.</p>
+
+<h2 id="4-end">4. End..</h2>
+
+<p>XSLT는 HTML 문서에서 실행되기 때문에 간단한 느낌이 있고, 지난 웹 애플리케이션 프로젝트 때 사용했던 것과 (뭐였는지 기억이 잘 안 남) 노드의 처리가 방식이 비슷해서 쉽게 이해할 수 있었다.</p>
+
+<p>XML 문서의 데이터를 HTML에 출력을 해주기 위한 언어기 때문에 가시적으로 보여서 습득에 용이한 것 같다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/basic/2024/04/08/dtd.html" title="[Basic] DTD">[Basic] DTD</a><a class="next" href="/jekyll-theme-yat/basic/2024/04/09/xpath.html" title="[Basic] XPath">[Basic] XPath</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/basic/2024/04/12/json.html" title="[Basic] JSON">
+            [Basic] JSON<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/rpa/2024/03/22/Hello-World-StudioX.html" title="[UIpath] 'Hello World' (StudioX)">
+            [UIpath] 'Hello World' (StudioX)<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/algorithm/2024/03/22/Array-Partition.html" title="[Leetcode] 561. Array Partition">
+            [Leetcode] 561. Array Partition<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/java/2024/04/01/spring-install.html" title="[Spring] Spring Installation">
+            [Spring] Spring Installation<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2024-2025 {Bonazoey}</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
